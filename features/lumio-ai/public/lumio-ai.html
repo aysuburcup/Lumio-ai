@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumio AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#C4B5F5; --cd:#5B4BA8; --cd2:#7C6ED4; --cl:#F4F2FF;
+  --cy:#F9E87A; --cp:#F9C8E0; --cm:#B8F0D8; --clav:#DDD6FE;
+  --td:#1E1B4B; --tl:#FFF; --tmd:#7C6FA8; --tml:#C4B8E8;
+  --ry:#FCD34D; --ro:#FB923C; --rr:#F87171;
+  --rxl:36px; --rlg:24px; --rmd:16px; --rp:999px;
+  --sh:0 8px 32px rgba(91,75,168,.14); --ss:0 4px 14px rgba(91,75,168,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webkit-font-smoothing:antialiased;}
+
+/* ══ VIEWS ══ */
+.view{position:fixed;inset:0;display:none;overflow-y:auto;}
+.view.on{display:block;}
+
+/* ══════════════════════════════════
+   ONBOARDING
+══════════════════════════════════ */
+#ob-view{background:var(--bg);}
+.ob-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+.phone{width:390px;min-height:780px;background:var(--bg);border-radius:48px;overflow:hidden;position:relative;box-shadow:0 32px 80px rgba(91,75,168,.35),0 0 0 1px rgba(255,255,255,.2);}
+
+/* PROGRESS */
+.pbar-wrap{padding:20px 24px 0;display:flex;gap:6px;position:absolute;top:0;left:0;right:0;z-index:10;}
+.pbseg{flex:1;height:3px;border-radius:3px;background:rgba(255,255,255,.3);overflow:hidden;}
+.pbfill{height:100%;border-radius:3px;background:#fff;width:0%;transition:width .5s ease;}
+
+/* BACK BTN */
+.ob-back{position:absolute;top:44px;left:20px;z-index:10;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.3);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--cd);transition:.2s;}
+.ob-back:hover{background:rgba(255,255,255,.5);}
+
+/* SCREENS */
+.ob-screen{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .4s ease,transform .4s ease;transform:translateX(40px);}
+.ob-screen.on{opacity:1;pointer-events:all;transform:translateX(0);}
+.ob-screen.exit{opacity:0;transform:translateX(-40px);}
+
+/* BOTTOM BTN */
+.ob-bottom{position:absolute;bottom:0;left:0;right:0;padding:18px 24px 30px;background:linear-gradient(to top,var(--bg) 70%,transparent);}
+.btn-dark{width:100%;padding:16px;border-radius:20px;border:none;background:var(--cd);color:#fff;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-dark:hover{background:var(--cd2);transform:scale(1.02);}
+.btn-dark:disabled{opacity:.4;transform:none;cursor:not-allowed;}
+.btn-white{width:100%;padding:15px;border-radius:20px;border:none;background:#fff;color:var(--cd);font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;cursor:pointer;transition:.2s;margin-bottom:10px;}
+.btn-white:hover{background:var(--cy);}
+.btn-ghost{width:100%;padding:13px;border-radius:20px;border:2px solid rgba(255,255,255,.25);background:transparent;color:rgba(255,255,255,.8);font-family:'Nunito',sans-serif;font-weight:700;font-size:14px;cursor:pointer;transition:.2s;}
+.btn-ghost:hover{border-color:rgba(255,255,255,.5);}
+
+/* S1 WELCOME */
+#ob-s1{background:var(--cd);justify-content:center;align-items:center;text-align:center;padding:40px 30px;}
+.ob-orb{width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:60px;margin:0 auto 28px;animation:float 3s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+.ob-logo{font-family:'Nunito',sans-serif;font-weight:900;font-size:44px;color:#fff;margin-bottom:6px;letter-spacing:-2px;}
+.ob-logo span{color:var(--cy);}
+.ob-tag{font-size:14px;color:rgba(255,255,255,.7);margin-bottom:40px;line-height:1.6;}
+
+/* COMMON */
+.ob-body{padding:80px 24px 120px;}
+.ob-icon{width:68px;height:68px;border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:22px;}
+.ob-title{font-family:'Nunito',sans-serif;font-weight:900;font-size:26px;color:var(--td);line-height:1.2;margin-bottom:8px;}
+.ob-title em{font-style:normal;color:var(--cd);}
+.ob-sub{font-size:13px;color:var(--tmd);line-height:1.6;}
+.ob-inp{margin-top:22px;width:100%;padding:15px 18px;border:2.5px solid rgba(91,75,168,.2);border-radius:16px;font-size:15px;font-family:'DM Sans',sans-serif;background:rgba(255,255,255,.8);color:var(--td);outline:none;transition:.2s;}
+.ob-inp:focus{border-color:var(--cd);background:#fff;}
+.ob-inp::placeholder{color:#B0B0B0;}
+.ob-infobox{background:rgba(255,255,255,.6);border-radius:18px;padding:14px 16px;margin-top:18px;display:flex;gap:10px;}
+.ob-infoicon{font-size:18px;flex-shrink:0;margin-top:1px;}
+.ob-infotext{font-size:12px;color:var(--tmd);line-height:1.6;}
+.ob-infotext strong{color:var(--td);font-weight:600;}
+
+/* CODE */
+.code-boxes{display:flex;gap:11px;margin-top:28px;justify-content:center;}
+.cb{width:54px;height:62px;border-radius:15px;border:2.5px solid rgba(91,75,168,.2);background:rgba(255,255,255,.8);font-family:'Nunito',sans-serif;font-weight:900;font-size:22px;color:var(--cd);text-align:center;outline:none;transition:.2s;caret-color:var(--cd);}
+.cb:focus{border-color:var(--cd);background:#fff;box-shadow:0 0 0 3px rgba(139,124,246,.15);}
+.cb.filled{border-color:var(--cd);background:var(--clav);}
+.resend{text-align:center;margin-top:16px;font-size:12px;color:var(--tmd);}
+.resend button{background:none;border:none;color:var(--cd);font-weight:700;cursor:pointer;font-size:12px;}
+.code-hint{background:rgba(255,255,255,.6);border-radius:14px;padding:12px;margin-top:20px;font-size:12px;color:var(--tmd);text-align:center;}
+.code-hint strong{color:var(--cd);}
+
+/* AGE */
+.age-list{display:flex;flex-direction:column;gap:12px;margin-top:26px;}
+.age-card{background:rgba(255,255,255,.7);border-radius:18px;padding:16px 18px;border:2.5px solid transparent;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:14px;}
+.age-card:hover{background:rgba(255,255,255,.9);}
+.age-card.sel{border-color:var(--cd);background:#fff;box-shadow:0 4px 18px rgba(91,75,168,.15);}
+.age-ic{width:46px;height:46px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.age-rng{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;color:var(--td);margin-bottom:1px;}
+.age-desc{font-size:11px;color:var(--tmd);}
+.age-chk{width:22px;height:22px;border-radius:50%;border:2px solid rgba(91,75,168,.2);display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;transition:.2s;margin-left:auto;flex-shrink:0;}
+.age-card.sel .age-chk{background:var(--cd);border-color:var(--cd);color:#fff;}
+
+/* INTERESTS */
+.int-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:26px;}
+.int-card{background:rgba(255,255,255,.7);border-radius:18px;padding:18px 14px;border:2.5px solid transparent;cursor:pointer;transition:.2s;text-align:center;}
+.int-card:hover{background:rgba(255,255,255,.9);}
+.int-card.sel{border-color:var(--cd);background:#fff;box-shadow:0 4px 18px rgba(91,75,168,.15);}
+.int-em{font-size:32px;margin-bottom:7px;}
+.int-nm{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;color:var(--td);margin-bottom:2px;}
+.int-card.sel .int-nm{color:var(--cd);}
+.int-ds{font-size:10px;color:var(--tmd);}
+.int-cnt{margin-top:12px;text-align:center;font-size:11px;color:var(--tmd);}
+.int-cnt strong{color:var(--cd);font-weight:700;}
+
+/* NAME */
+.av-row{display:flex;gap:10px;margin-top:20px;justify-content:center;}
+.av-opt{width:60px;height:60px;border-radius:50%;border:3px solid transparent;cursor:pointer;font-size:28px;display:flex;align-items:center;justify-content:center;transition:.2s;}
+.av-opt:hover{transform:scale(1.1);}
+.av-opt.sel{border-color:var(--cd);box-shadow:0 0 0 3px rgba(91,75,168,.2);}
+.name-inp{margin-top:24px;width:100%;padding:16px;border:2.5px solid rgba(91,75,168,.2);border-radius:16px;font-size:17px;font-family:'Nunito',sans-serif;font-weight:700;background:rgba(255,255,255,.8);color:var(--td);outline:none;transition:.2s;text-align:center;}
+.name-inp:focus{border-color:var(--cd);background:#fff;}
+.name-inp::placeholder{color:#C0C0C0;font-weight:400;}
+.name-prev{margin-top:16px;background:rgba(255,255,255,.5);border-radius:14px;padding:12px;text-align:center;font-size:13px;color:var(--tmd);min-height:46px;display:flex;align-items:center;justify-content:center;}
+.name-prev strong{color:var(--cd);font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;}
+
+/* S7 READY */
+#ob-s7{background:var(--cd);justify-content:center;align-items:center;text-align:center;padding:36px 28px;}
+.ready-orb{width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:52px;margin:0 auto 24px;animation:popin .6s cubic-bezier(.34,1.56,.64,1);}
+@keyframes popin{from{transform:scale(0);opacity:0;}to{transform:scale(1);opacity:1;}}
+.ready-t{font-family:'Nunito',sans-serif;font-weight:900;font-size:30px;color:#fff;margin-bottom:7px;line-height:1.2;}
+.ready-nm{color:var(--cy);}
+.ready-sub{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:32px;line-height:1.6;}
+.feat-pills{display:flex;flex-direction:column;gap:9px;margin-bottom:32px;}
+.fpill{background:rgba(255,255,255,.1);border-radius:13px;padding:11px 16px;display:flex;align-items:center;gap:11px;text-align:left;}
+.fpic{font-size:20px;flex-shrink:0;}
+.fptx{font-size:12px;color:rgba(255,255,255,.85);line-height:1.4;}
+.fptx strong{color:#fff;font-weight:600;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ══════════════════════════════════
+   MAIN APP
+══════════════════════════════════ */
+#app-view{background:var(--bg);}
+.app-inner{padding:20px 20px 90px;max-width:1300px;margin:0 auto;}
+
+/* TOPBAR */
+.topbar{display:flex;justify-content:space-between;align-items:center;background:rgba(244,242,255,.6);backdrop-filter:blur(16px);padding:11px 18px;border-radius:var(--rp);margin-bottom:20px;box-shadow:var(--ss);}
+.logo{font-family:'Nunito',sans-serif;font-weight:900;font-size:20px;color:var(--cd);letter-spacing:-.5px;}
+.logo span{color:#A78BFA;}
+.mode-tog{display:flex;background:rgba(255,255,255,.6);border-radius:var(--rp);padding:3px;gap:3px;}
+.mt-btn{padding:8px 16px;border-radius:var(--rp);border:none;background:transparent;color:var(--td);font-weight:600;font-size:12px;cursor:pointer;transition:.2s;font-family:'DM Sans',sans-serif;}
+.mt-btn.on{background:#fff;box-shadow:var(--ss);}
+.ib{width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,.5);color:var(--td);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;transition:.2s;}
+.ib:hover{background:#fff;}
+
+/* PAGES */
+.page{display:none;animation:fu .3s ease;}
+.page.on{display:block;}
+@keyframes fu{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* BOTTOM NAV */
+.bnav{position:fixed;bottom:0;left:0;right:0;background:rgba(244,242,255,.96);backdrop-filter:blur(20px);border-top:1px solid rgba(91,75,168,.12);display:flex;padding:8px 0 14px;z-index:200;}
+.bn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;border:none;background:transparent;cursor:pointer;padding:5px 4px;transition:.2s;}
+.bn:hover{background:rgba(91,75,168,.07);border-radius:12px;}
+.bnic{font-size:22px;line-height:1;transition:.2s;}
+.bnlb{font-size:10px;font-weight:700;color:var(--tmd);font-family:'Nunito',sans-serif;transition:.2s;}
+.bn.on .bnlb{color:var(--cd);}
+.bn.on .bnic{transform:scale(1.15);}
+.bndot{width:4px;height:4px;border-radius:50%;background:var(--cd);opacity:0;margin-top:-1px;transition:.2s;}
+.bn.on .bndot{opacity:1;}
+
+/* CARD */
+.card{border-radius:var(--rxl);padding:26px;position:relative;overflow:hidden;box-shadow:var(--sh);}
+
+/* HOME */
+.child-grid{display:grid;grid-template-columns:1fr 310px;gap:18px;}
+@media(max-width:860px){.child-grid{grid-template-columns:1fr;}}
+.hero-card{background:var(--cd);color:var(--tl);grid-column:1;grid-row:1;}
+.ctop{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;}
+.clbl{font-size:12px;font-weight:600;color:var(--tml);display:flex;align-items:center;gap:6px;}
+.stbadge{background:rgba(255,255,255,.15);padding:5px 12px;border-radius:var(--rp);font-size:11px;font-weight:700;display:flex;align-items:center;gap:4px;}
+.greeting{font-family:'Nunito',sans-serif;font-size:32px;font-weight:900;line-height:1.15;letter-spacing:-1px;margin-bottom:6px;margin-top:14px;}
+.greeting em{font-style:normal;color:var(--cy);}
+.gsub{font-size:13px;color:var(--tml);margin-bottom:20px;}
+.egrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+.eb{background:#fff;border:none;border-radius:13px;padding:13px 5px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:.2s;box-shadow:var(--ss);}
+.eb:hover{transform:translateY(-3px);}
+.eb.sel{outline:3px solid var(--cy);}
+.edot{width:22px;height:22px;border-radius:50%;}
+.elbl{font-size:9px;font-weight:700;color:var(--td);}
+.ebm{grid-column:1/-1;flex-direction:row;justify-content:center;padding:10px;border:2px dashed rgba(255,255,255,.3);background:rgba(255,255,255,.1);gap:5px;}
+.ebm .elbl{color:#fff;font-size:11px;}
+.suggest{border-top:1px solid rgba(255,255,255,.15);margin-top:14px;padding-top:12px;animation:fu .35s ease;}
+.slbl{font-size:9px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;}
+.smsg{font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;color:#fff;margin-bottom:9px;line-height:1.5;}
+.sacts{display:flex;gap:6px;flex-wrap:wrap;}
+.sact{background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25);border-radius:9px;padding:6px 11px;font-size:11px;font-weight:600;color:#fff;display:flex;align-items:center;gap:4px;cursor:pointer;transition:.2s;}
+.sact:hover{background:rgba(255,255,255,.25);}
+.al-card{background:var(--cl);grid-column:1;grid-row:2;}
+.al-title{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;color:var(--cd);margin-bottom:12px;}
+.ai{display:flex;align-items:center;padding:12px 0;border-bottom:1px dashed rgba(91,75,168,.1);gap:11px;cursor:pointer;transition:.15s;}
+.ai:last-child{border-bottom:none;padding-bottom:0;}
+.ai:hover .arr{background:var(--cd);color:#fff;}
+.aico{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.ainf{flex:1;}
+.anm{font-weight:600;font-size:13px;color:var(--td);margin-bottom:1px;}
+.ads{font-size:11px;color:var(--tmd);}
+.arr{width:30px;height:30px;border-radius:50%;background:#EDE9FE;display:flex;align-items:center;justify-content:center;color:var(--cd);font-size:11px;transition:.2s;flex-shrink:0;}
+.rcol{grid-column:2;grid-row:1/3;display:flex;flex-direction:column;gap:16px;}
+@media(max-width:860px){.rcol{grid-column:1;grid-row:auto;}}
+.chat-card{background:var(--clav);}
+.cct{font-family:'Nunito',sans-serif;font-size:11px;font-weight:600;color:var(--tmd);margin-bottom:2px;}
+.cch{font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:var(--cd);margin-bottom:11px;}
+.cbubs{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;max-height:160px;overflow-y:auto;scrollbar-width:none;}
+.cbubs::-webkit-scrollbar{display:none;}
+.cbai{background:#fff;color:var(--td);padding:8px 11px;border-radius:0 11px 11px 11px;font-size:11px;line-height:1.5;align-self:flex-start;max-width:90%;box-shadow:var(--ss);}
+.cbusr{background:var(--cd);color:#fff;padding:8px 11px;border-radius:11px 0 11px 11px;font-size:11px;line-height:1.5;align-self:flex-end;max-width:90%;}
+.cinrow{display:flex;gap:6px;}
+.cinp{flex:1;padding:9px 12px;border:2px solid rgba(91,75,168,.2);border-radius:var(--rp);font-size:12px;font-family:'DM Sans',sans-serif;background:#fff;color:var(--td);outline:none;transition:.2s;}
+.cinp:focus{border-color:var(--cd);}
+.csend{width:36px;height:36px;border-radius:50%;background:var(--cd);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;transition:.2s;flex-shrink:0;}
+.csend:hover{background:var(--cd2);}
+.streak-card{background:var(--cy);}
+.stlbl{font-size:10px;color:rgba(30,27,75,.5);margin-bottom:8px;font-weight:500;}
+.stbig{font-family:'Nunito',sans-serif;font-size:40px;font-weight:900;color:var(--td);line-height:1;}
+.stsub{font-size:11px;color:rgba(30,27,75,.6);margin:3px 0 10px;}
+.stdots{display:flex;gap:4px;}
+.std{width:24px;height:24px;border-radius:50%;background:rgba(30,27,75,.12);display:flex;align-items:center;justify-content:center;font-size:10px;}
+.std.d{background:var(--cd);color:#fff;}
+
+/* ACT SCREENS */
+.ascreen{display:none;animation:fu .3s ease;}
+.ascreen.on{display:block;}
+.backbtn{background:rgba(91,75,168,.12);border:none;border-radius:var(--rp);padding:7px 13px;font-family:'Nunito',sans-serif;font-weight:700;font-size:11px;color:var(--cd);cursor:pointer;margin-bottom:16px;display:inline-flex;align-items:center;gap:4px;}
+.backbtn:hover{background:rgba(91,75,168,.2);}
+.bg2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:700px){.bg2,.sg2,.gg2,.dg2{grid-template-columns:1fr;}}
+.bcard{background:var(--cd);color:#fff;}
+.bcirc{width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.12);margin:0 auto 16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;transition:transform 1s ease;}
+.bem{font-size:34px;}
+.bwrd{font-family:'Nunito',sans-serif;font-weight:900;font-size:13px;color:#fff;}
+.bcnt{font-size:10px;color:rgba(255,255,255,.6);}
+.bdots{display:flex;gap:5px;justify-content:center;margin-bottom:12px;}
+.bdot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.2);}
+.bdot.done{background:#fff;}
+.bdot.cur{background:var(--cy);transform:scale(1.2);}
+.bpbar{width:100%;background:rgba(255,255,255,.15);border-radius:20px;height:5px;margin-bottom:14px;overflow:hidden;}
+.bpfill{height:100%;border-radius:20px;background:#fff;transition:width .3s linear;width:0%;}
+.bbtns{display:flex;gap:8px;}
+.bbtn{flex:1;padding:11px;border-radius:var(--rp);border:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;cursor:pointer;transition:.2s;}
+.bbtn-w{background:#fff;color:var(--cd);}
+.bbtn-w:hover{background:var(--cy);}
+.bbtn-g{background:rgba(255,255,255,.15);color:#fff;}
+.bbtn:disabled{opacity:.4;cursor:not-allowed;}
+.tccol{display:flex;flex-direction:column;gap:10px;}
+.tcitem{background:var(--cl);border-radius:var(--rlg);padding:13px;cursor:pointer;border:2px solid transparent;transition:.2s;}
+.tcitem:hover{border-color:var(--cd);}
+.tcitem.sel{border-color:var(--cd);background:var(--clav);}
+.tcnm{font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;color:var(--cd);margin-bottom:2px;}
+.tcdesc{font-size:10px;color:var(--tmd);}
+.tipbox{background:var(--clav);border-radius:var(--rlg);padding:11px 13px;font-size:11px;color:var(--cd);line-height:1.6;margin-top:9px;}
+.complcard{background:var(--cy);border-radius:var(--rxl);padding:22px;text-align:center;display:none;animation:popin .5s cubic-bezier(.34,1.56,.64,1);}
+.ccbtn{background:var(--cd);color:#fff;border:none;border-radius:var(--rp);padding:10px 20px;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;cursor:pointer;margin:0 3px;}
+.sg2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.stcard{background:var(--cd);color:#fff;}
+.stem{font-size:44px;margin-bottom:12px;display:block;}
+.stbadge2{background:rgba(255,255,255,.15);display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:var(--rp);font-size:10px;font-weight:700;margin-bottom:10px;}
+.sttitle{font-family:'Nunito',sans-serif;font-weight:900;font-size:19px;margin-bottom:7px;}
+.sttext{font-size:12px;line-height:1.7;color:rgba(255,255,255,.85);}
+.scol{display:flex;flex-direction:column;gap:10px;justify-content:center;}
+.sc{background:var(--cl);border:2px solid rgba(91,75,168,.12);border-radius:var(--rlg);padding:13px 15px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:500;color:var(--td);cursor:pointer;text-align:left;transition:.2s;}
+.sc:hover{border-color:var(--cd);background:var(--clav);color:var(--cd);}
+.schint{font-size:9px;color:var(--tmd);margin-top:2px;}
+.gg2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.gqcard{background:var(--cd);color:#fff;}
+.gocard{background:var(--cl);}
+.got{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;color:var(--cd);margin-bottom:11px;}
+.gobtn{width:100%;background:#fff;border:2px solid rgba(91,75,168,.12);border-radius:var(--rlg);padding:11px;font-size:16px;cursor:pointer;margin-bottom:8px;transition:.2s;}
+.gobtn:hover{border-color:var(--cd);background:var(--clav);}
+.golbl{font-size:10px;color:var(--tmd);font-weight:500;}
+.dg2{display:grid;grid-template-columns:1fr 200px;gap:16px;}
+.dcrd{background:var(--cl);}
+.dcrd canvas{border-radius:var(--rlg);cursor:crosshair;width:100%;display:block;background:#fff;box-shadow:var(--ss);touch-action:none;}
+.dtool{background:var(--cd);display:flex;flex-direction:column;gap:11px;}
+.dtlbl{font-size:9px;font-weight:700;color:var(--tml);text-transform:uppercase;letter-spacing:.06em;}
+.cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.cbbtn{width:100%;aspect-ratio:1;border-radius:50%;border:3px solid transparent;cursor:pointer;transition:.2s;}
+.cbbtn.sel{border-color:#fff;transform:scale(1.1);}
+.szbtns{display:flex;gap:6px;}
+.szbtn{flex:1;padding:7px;border-radius:var(--rp);background:rgba(255,255,255,.15);border:none;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:10px;cursor:pointer;transition:.2s;}
+.szbtn.sel{background:#fff;color:var(--cd);}
+.dbtn{padding:9px;border-radius:var(--rp);border:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;cursor:pointer;transition:.2s;}
+.dbtn-g{background:rgba(255,255,255,.15);color:#fff;}
+.dbtn-w{background:#fff;color:var(--cd);}
+
+/* ACTIVITY PAGE */
+.apghd{margin-bottom:18px;}
+.apghd h2{font-family:'Nunito',sans-serif;font-weight:900;font-size:22px;color:var(--td);margin-bottom:2px;}
+.apghd p{font-size:12px;color:var(--tmd);}
+.apgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:640px){.apgrid{grid-template-columns:1fr;}}
+.apcard{border-radius:var(--rxl);padding:24px;cursor:pointer;transition:.2s;box-shadow:var(--sh);position:relative;overflow:hidden;}
+.apcard:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(91,75,168,.2);}
+.apem{font-size:40px;margin-bottom:10px;display:block;}
+.aptitle{font-family:'Nunito',sans-serif;font-weight:900;font-size:17px;margin-bottom:4px;}
+.apdesc{font-size:11px;line-height:1.6;opacity:.8;}
+.aparr{position:absolute;bottom:16px;right:16px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-size:12px;}
+
+/* PARENT */
+.pgrid{display:grid;grid-template-columns:1fr 1fr 280px;gap:16px;}
+@media(max-width:1000px){.pgrid{grid-template-columns:1fr 1fr;}}
+@media(max-width:640px){.pgrid{grid-template-columns:1fr;}}
+.phero{background:var(--cd);color:#fff;grid-column:1/3;}
+@media(max-width:1000px){.phero{grid-column:1/-1;}}
+.phnm{font-family:'Nunito',sans-serif;font-weight:900;font-size:19px;color:#fff;margin-bottom:1px;}
+.phsub{font-size:11px;color:var(--tml);margin-bottom:12px;}
+.rpill{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:var(--rp);font-size:10px;font-weight:700;margin-bottom:12px;}
+.rpill.y{background:var(--cy);color:var(--td);}
+.stats-row{display:flex;gap:10px;flex-wrap:wrap;}
+.stit{background:rgba(255,255,255,.1);border-radius:var(--rmd);padding:10px 14px;}
+.stiv{font-family:'Nunito',sans-serif;font-weight:900;font-size:20px;color:#fff;line-height:1;}
+.stil{font-size:10px;color:var(--tml);margin-top:1px;}
+.chartcrd{background:var(--cl);}
+.chrt{font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;color:var(--cd);margin-bottom:10px;}
+.barea{display:flex;align-items:flex-end;gap:5px;height:75px;margin-bottom:4px;}
+.bcol{display:flex;flex-direction:column;align-items:center;flex:1;height:100%;justify-content:flex-end;gap:2px;}
+.bsg{width:100%;border-radius:3px 3px 0 0;}
+.bdy{font-size:9px;color:var(--tmd);text-align:center;}
+.leg{display:flex;gap:9px;margin-top:7px;flex-wrap:wrap;}
+.legit{display:flex;align-items:center;gap:3px;font-size:9px;color:var(--tmd);}
+.legdt{width:7px;height:7px;border-radius:2px;}
+.moodcrd{background:var(--cy);}
+.moodbig{font-size:46px;margin:5px 0 3px;}
+.moodv{font-family:'Nunito',sans-serif;font-weight:900;font-size:16px;color:var(--td);margin-bottom:1px;}
+.moods{font-size:10px;color:rgba(30,27,75,.6);}
+.actn-crd{background:var(--clav);grid-column:1/3;}
+@media(max-width:1000px){.actn-crd{grid-column:1/-1;}}
+.actt{font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;color:var(--cd);margin-bottom:8px;}
+.acti{font-size:11px;color:var(--td);padding:3px 0 3px 12px;position:relative;line-height:1.5;}
+.acti::before{content:'';position:absolute;left:0;top:10px;width:4px;height:4px;border-radius:50%;background:var(--cd);}
+.privcrd{background:var(--cd);color:#fff;grid-column:3;grid-row:1/3;}
+@media(max-width:1000px){.privcrd{grid-column:1/-1;grid-row:auto;}}
+.privic{font-size:30px;margin-bottom:10px;display:block;}
+.privt{font-family:'Nunito',sans-serif;font-weight:900;font-size:15px;margin-bottom:7px;}
+.privtx{font-size:11px;color:var(--tml);line-height:1.7;margin-bottom:10px;}
+.privrule{background:rgba(255,255,255,.1);border-radius:10px;padding:8px 11px;margin-bottom:7px;font-size:11px;color:#fff;display:flex;align-items:center;gap:7px;}
+.kvkk{background:var(--cy);color:var(--td);display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:var(--rp);font-size:10px;font-weight:700;margin-top:8px;}
+
+/* PROFILE */
+.profhero{background:var(--cd);border-radius:var(--rxl);padding:24px;text-align:center;margin-bottom:16px;}
+.profav{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 10px;}
+.profnm{font-family:'Nunito',sans-serif;font-weight:900;font-size:20px;color:#fff;margin-bottom:3px;}
+.proftag{background:rgba(255,255,255,.15);display:inline-block;padding:3px 12px;border-radius:var(--rp);font-size:10px;color:rgba(255,255,255,.8);font-weight:600;}
+.stat3g{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px;}
+.s3{background:#fff;border-radius:var(--rlg);padding:13px;text-align:center;box-shadow:var(--ss);}
+.s3v{font-family:'Nunito',sans-serif;font-weight:900;font-size:24px;color:var(--cd);line-height:1;}
+.s3l{font-size:9px;color:var(--tmd);margin-top:2px;}
+.bdgrow{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.bdgcrd{background:#fff;border-radius:var(--rlg);padding:12px 13px;display:flex;align-items:center;gap:10px;flex:1;min-width:120px;box-shadow:var(--ss);}
+.bdgic{font-size:24px;}
+.bdgnm{font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;color:var(--td);}
+.bdgds{font-size:9px;color:var(--tmd);}
+.sttcrd{background:#fff;border-radius:var(--rxl);overflow:hidden;box-shadow:var(--sh);margin-bottom:16px;}
+.srow{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid rgba(91,75,168,.07);cursor:pointer;transition:.15s;}
+.srow:last-child{border-bottom:none;}
+.srow:hover{background:var(--cl);}
+.srl{display:flex;align-items:center;gap:10px;}
+.sric{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;}
+.srtl{font-weight:600;font-size:12px;color:var(--td);}
+.srsl{font-size:10px;color:var(--tmd);}
+.tog{width:36px;height:20px;border-radius:10px;background:#E5E7EB;position:relative;cursor:pointer;transition:.3s;border:none;flex-shrink:0;}
+.tog.on{background:var(--cd);}
+.tog::after{content:'';position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:.3s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+.tog.on::after{left:19px;}
+.chev{color:var(--tmd);font-size:14px;}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     ONBOARDING VIEW
+══════════════════════════════════ -->
+<div class="view on" id="ob-view">
+<div class="ob-wrap">
+<div class="phone">
+
+  <!-- Progress bar -->
+  <div class="pbar-wrap" id="ob-pbar" style="display:none;">
+    <div class="pbseg"><div class="pbfill" id="pb1"></div></div>
+    <div class="pbseg"><div class="pbfill" id="pb2"></div></div>
+    <div class="pbseg"><div class="pbfill" id="pb3"></div></div>
+    <div class="pbseg"><div class="pbfill" id="pb4"></div></div>
+    <div class="pbseg"><div class="pbfill" id="pb5"></div></div>
+  </div>
+  <button class="ob-back" id="ob-back" style="display:none;" onclick="obBack()">←</button>
+
+  <!-- S1: KARŞILAMA -->
+  <div class="ob-screen on" id="ob-s1">
+    <div class="ob-logo">Lumio<span>.</span></div>
+    <div class="ob-tag">Çocukların duygularını anlamalarına<br>yardımcı olan AI arkadaşı</div>
+    <button class="btn-white" onclick="obGo(2)">Başlayalım →</button>
+    <button class="btn-ghost" onclick="loginMode()">Zaten hesabım var</button>
+  </div>
+
+  <!-- S2: EBEVEYN ONAYI -->
+  <div class="ob-screen" id="ob-s2">
+    <div class="ob-body">
+      <div class="ob-icon" style="background:var(--clav);">👨‍👩‍👧</div>
+      <div class="ob-title">Önce bir<br><em>ebeveyn onayı</em> alalım</div>
+      <div class="ob-sub">Lumio çocuklarla çalışır. Başlamadan önce bir ebeveyninin onay vermesi gerekiyor.</div>
+      <input class="ob-inp" id="ob-phone" type="tel" placeholder="Ebeveyn telefon numarası" oninput="checkPhone()">
+      <div class="ob-infobox">
+        <span class="ob-infoicon">🔒</span>
+        <div class="ob-infotext"><strong>KVKK Güvencesi:</strong> Telefon numaranı yalnızca doğrulama için kullanıyoruz.</div>
+      </div>
+    </div>
+    <div class="ob-bottom">
+      <button class="btn-dark" id="ob-phone-btn" disabled onclick="sendCode()">Doğrulama Kodu Gönder →</button>
+    </div>
+  </div>
+
+  <!-- S3: KOD -->
+  <div class="ob-screen" id="ob-s3">
+    <div class="ob-body">
+      <div class="ob-icon" style="background:#FEF9C3;">📱</div>
+      <div class="ob-title">Kodu<br><em>gir</em></div>
+      <div class="ob-sub">Telefona gönderilen 4 haneli kodu gir.</div>
+      <div class="code-boxes">
+        <input class="cb" id="c1" maxlength="1" type="number" oninput="codeIn(this,'c2')" onkeydown="codeBk(event,this,'')">
+        <input class="cb" id="c2" maxlength="1" type="number" oninput="codeIn(this,'c3')" onkeydown="codeBk(event,this,'c1')">
+        <input class="cb" id="c3" maxlength="1" type="number" oninput="codeIn(this,'c4')" onkeydown="codeBk(event,this,'c2')">
+        <input class="cb" id="c4" maxlength="1" type="number" oninput="codeIn(this,'')"   onkeydown="codeBk(event,this,'c3')">
+      </div>
+      <div class="resend">Kod gelmedi mi? <button onclick="alert('Tekrar gönderildi!')">Tekrar gönder</button></div>
+      <div class="code-hint">Demo için herhangi 4 rakam: <strong>1234</strong></div>
+    </div>
+    <div class="ob-bottom">
+      <button class="btn-dark" id="ob-code-btn" disabled onclick="obGo(4)">Onayla ve Devam Et →</button>
+    </div>
+  </div>
+
+  <!-- S4: YAŞ -->
+  <div class="ob-screen" id="ob-s4">
+    <div class="ob-body">
+      <div class="ob-title">Çocuk kaç<br><em>yaşında?</em></div>
+      <div class="ob-sub">Yaşa göre arayüzü kişiselleştiriyoruz.</div>
+      <div class="age-list">
+        <div class="age-card" onclick="selAge(this)">
+          <div class="age-ic" style="background:#FEF9C3;">🌱</div>
+          <div><div class="age-rng">5 – 7 yaş</div><div class="age-desc">Emoji ve renk seçimi</div></div>
+          <div class="age-chk">✓</div>
+        </div>
+        <div class="age-card" onclick="selAge(this)">
+          <div class="age-ic" style="background:#EDE9FE;">🌿</div>
+          <div><div class="age-rng">8 – 11 yaş</div><div class="age-desc">Kısa cümle + emoji</div></div>
+          <div class="age-chk">✓</div>
+        </div>
+        <div class="age-card" onclick="selAge(this)">
+          <div class="age-ic" style="background:#FCE7F3;">🌳</div>
+          <div><div class="age-rng">12 – 14 yaş</div><div class="age-desc">Günlük yazma + AI sohbet</div></div>
+          <div class="age-chk">✓</div>
+        </div>
+      </div>
+    </div>
+    <div class="ob-bottom">
+      <button class="btn-dark" id="ob-age-btn" disabled onclick="obGo(5)">Devam Et →</button>
+    </div>
+  </div>
+
+  <!-- S5: İLGİ ALANLARI -->
+  <div class="ob-screen" id="ob-s5">
+    <div class="ob-body">
+      <div class="ob-title">Ne yapmayı<br><em>sever?</em></div>
+      <div class="ob-sub">Birden fazla seçebilirsin.</div>
+      <div class="int-grid">
+        <div class="int-card" onclick="togInt(this)"><div class="int-em">🎮</div><div class="int-nm">Oyun</div><div class="int-ds">Mini oyunlar</div></div>
+        <div class="int-card" onclick="togInt(this)"><div class="int-em">🐶</div><div class="int-nm">Hayvanlar</div><div class="int-ds">Sevimli arkadaşlar</div></div>
+        <div class="int-card" onclick="togInt(this)"><div class="int-em">🎨</div><div class="int-nm">Çizim</div><div class="int-ds">Renk ve yaratıcılık</div></div>
+        <div class="int-card" onclick="togInt(this)"><div class="int-em">📖</div><div class="int-nm">Hikaye</div><div class="int-ds">Macera ve hayal</div></div>
+        <div class="int-card" onclick="togInt(this)"><div class="int-em">🎵</div><div class="int-nm">Müzik</div><div class="int-ds">Ritim ve melodi</div></div>
+        <div class="int-card" onclick="togInt(this)"><div class="int-em">⚽</div><div class="int-nm">Spor</div><div class="int-ds">Hareket ve eğlence</div></div>
+      </div>
+      <div class="int-cnt" id="int-cnt">En az 1 seç</div>
+    </div>
+    <div class="ob-bottom">
+      <button class="btn-dark" id="ob-int-btn" disabled onclick="obGo(6)">Devam Et →</button>
+    </div>
+  </div>
+
+  <!-- S6: İSİM -->
+  <div class="ob-screen" id="ob-s6">
+    <div class="ob-body">
+      <div class="ob-title">Çocuğun<br><em>adı ne?</em></div>
+      <div class="ob-sub">Lumio onunla konuşurken adını kullanacak.</div>
+      <div class="av-row">
+        <div class="av-opt sel" style="background:#FEF9C3;" onclick="selAv(this,'😊')">😊</div>
+        <div class="av-opt" style="background:#EDE9FE;" onclick="selAv(this,'🌟')">🌟</div>
+        <div class="av-opt" style="background:#FCE7F3;" onclick="selAv(this,'🦋')">🦋</div>
+        <div class="av-opt" style="background:#DCFCE7;" onclick="selAv(this,'🌈')">🌈</div>
+      </div>
+      <input class="name-inp" id="ob-name" placeholder="İsim yaz..." oninput="checkName()">
+      <div class="name-prev" id="name-prev">İsim girince önizleme burada görünür</div>
+    </div>
+    <div class="ob-bottom">
+      <button class="btn-dark" id="ob-name-btn" disabled onclick="obGo(7)">Hazırlanalım! 🎉</button>
+    </div>
+  </div>
+
+  <!-- S7: HAZIR -->
+  <div class="ob-screen" id="ob-s7">
+    <div class="ready-orb" id="ready-orb">🌟</div>
+    <div class="ready-t">Hazırsın<br><span class="ready-nm" id="ready-nm">!</span></div>
+    <div class="ready-sub">Lumio seninle her gün konuşmaya hazır!</div>
+    <div class="feat-pills">
+      <div class="fpill"><span class="fpic">😊</span><div class="fptx"><strong>Günlük duygu takibi</strong> — Her gün nasıl hissettiğini Lumio'ya anlat</div></div>
+      <div class="fpill"><span class="fpic">🫁</span><div class="fptx"><strong>Aktiviteler</strong> — Nefes, hikaye ve mini oyunlar</div></div>
+      <div class="fpill"><span class="fpic">👨‍👩‍👧</span><div class="fptx"><strong>Veli paneli</strong> — Ebeveynin her zaman bilgilendirilir</div></div>
+    </div>
+    <button class="btn-white" onclick="startApp()">Uygulamaya Geç →</button>
+  </div>
+
+</div><!-- /phone -->
+</div><!-- /ob-wrap -->
+</div><!-- /ob-view -->
+
+<!-- ══════════════════════════════════
+     MAIN APP VIEW
+══════════════════════════════════ -->
+<div class="view" id="app-view">
+<div class="app-inner">
+
+  <nav class="topbar">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div id="top-av" style="width:34px;height:34px;border-radius:50%;background:#F9A8D4;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#831843;">E</div>
+      <div class="logo">Lumio<span>.</span></div>
+    </div>
+    <div class="mode-tog">
+      <button class="mt-btn on" onclick="setMode('child',this)">Çocuk</button>
+      <button class="mt-btn" onclick="askPin()">Veli</button>
+    </div>
+    <div style="display:flex;gap:7px;">
+      <button class="ib">?</button>
+      <button class="ib">⚙</button>
+    </div>
+  </nav>
+
+  <!-- ANA SAYFA -->
+  <div class="page on" id="pg-home">
+
+    <!-- ÇOCUK -->
+    <div id="child-wrap">
+      <div id="child-main">
+        <div class="child-grid">
+          <div class="card hero-card">
+            <div class="ctop">
+              <div class="clbl"><div style="width:19px;height:19px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:9px;">★</div>Günlük takip</div>
+              <div class="stbadge">🔥 5 Günlük Seri</div>
+            </div>
+            <div class="greeting" id="app-greeting">Merhaba <em id="app-name">Elif</em>!</div>
+            <div class="gsub">Bugün nasıl hissediyorsun?</div>
+            <div class="egrid">
+              <button class="eb" onclick="pickEmo(this,'happy')"><div class="edot" style="background:#F9E87A;"></div><span class="elbl">Mutlu</span></button>
+              <button class="eb" onclick="pickEmo(this,'sad')"><div class="edot" style="background:#93C5FD;"></div><span class="elbl">Üzgün</span></button>
+              <button class="eb" onclick="pickEmo(this,'angry')"><div class="edot" style="background:#FCA5A5;"></div><span class="elbl">Kızgın</span></button>
+              <button class="eb" onclick="pickEmo(this,'scared')"><div class="edot" style="background:#C4B5FD;"></div><span class="elbl">Korkmuş</span></button>
+              <button class="eb" onclick="pickEmo(this,'neutral')"><div class="edot" style="background:#D1D5DB;"></div><span class="elbl">Nötr</span></button>
+              <button class="eb ebm" onclick="pickEmo(this,'unknown')"><span class="elbl">🤷 Bilmiyorum</span></button>
+            </div>
+            <div id="suggest-panel" style="display:none;">
+              <div class="suggest">
+                <div class="slbl">Lumio önerir ✨</div>
+                <div class="smsg" id="smsg"></div>
+                <div class="sacts" id="sacts"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="rcol">
+            <div class="card chat-card">
+              <div class="cct">Yapay Zeka Asistanı</div>
+              <div class="cch">Lumio ile Sohbet</div>
+              <div class="cbubs" id="chat-area">
+                <div class="cbai">Merhaba! Ben Lumio 💜 Bir duygu seç ya da bana yaz!</div>
+              </div>
+              <div class="cinrow">
+                <input class="cinp" id="cin" placeholder="Bir şeyler yaz..." onkeydown="if(event.key==='Enter')sendMsg()">
+                <button class="csend" onclick="sendMsg()">➤</button>
+              </div>
+            </div>
+            <div class="card streak-card">
+              <div class="stlbl">Bu hafta serisi</div>
+              <div class="stbig">5</div>
+              <div class="stsub">gün üst üste 🎉</div>
+              <div class="stdots">
+                <div class="std d">✓</div><div class="std d">✓</div><div class="std d">✓</div>
+                <div class="std d">✓</div><div class="std d">✓</div>
+                <div class="std"></div><div class="std"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card al-card">
+            <div class="al-title">Önerilen Aktiviteler</div>
+            <div class="ai" onclick="openAct('breath')"><div class="aico" style="background:#EDE9FE;">🫁</div><div class="ainf"><div class="anm">Sihirli Nefes</div><div class="ads">Rahatlama · 3 dk</div></div><div class="arr">↗</div></div>
+            <div class="ai" onclick="openAct('story')"><div class="aico" style="background:#FEF9C3;">📖</div><div class="ainf"><div class="anm">Cesur Aslanın Hikayesi</div><div class="ads">Etkileşimli masal</div></div><div class="arr">↗</div></div>
+            <div class="ai" onclick="openAct('game')"><div class="aico" style="background:#FCE7F3;">🎮</div><div class="ainf"><div class="anm">Duygu Eşleştirme</div><div class="ads">Mini oyun</div></div><div class="arr">↗</div></div>
+            <div class="ai" onclick="openAct('draw')"><div class="aico" style="background:#DCFCE7;">🎨</div><div class="ainf"><div class="anm">Duygu Tuvali</div><div class="ads">Serbest çizim</div></div><div class="arr">↗</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AKTİVİTE EKRANLARI -->
+      <div class="ascreen" id="act-breath">
+        <button class="backbtn" onclick="closeAct()">← Geri</button>
+        <div class="bg2">
+          <div class="card bcard">
+            <div class="ctop"><div class="clbl">🌬️ Nefes Egzersizi</div></div>
+            <div style="text-align:center;padding:8px 0 14px;">
+              <div class="bcirc" id="bcirc"><span class="bem" id="bem">🫁</span><span class="bwrd" id="bwrd">Hazır mısın?</span><span class="bcnt" id="bcnt">Başla'ya bas</span></div>
+              <div class="bdots" id="bdots"></div>
+              <div class="bpbar"><div class="bpfill" id="bpfill"></div></div>
+              <div class="bbtns">
+                <button class="bbtn bbtn-w" id="bstart" onclick="startBreath()">Başla 🌬️</button>
+                <button class="bbtn bbtn-g" id="bstop" onclick="stopBreath()" disabled>Dur</button>
+              </div>
+            </div>
+            <div class="complcard" id="bcomp">
+              <div style="font-size:42px;margin-bottom:7px;">🌟</div>
+              <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:17px;color:var(--td);margin-bottom:4px;">Harika iş!</div>
+              <div style="font-size:11px;color:rgba(30,27,75,.6);margin-bottom:12px;">Kendini daha iyi hissediyor musun?</div>
+              <button class="ccbtn" onclick="resetBreath()">Tekrar</button>
+              <button class="ccbtn" onclick="closeAct()">Bitti 😊</button>
+            </div>
+          </div>
+          <div class="tccol">
+            <div class="tcitem sel" onclick="selTech(this,'478')"><div class="tcnm">🌙 4-7-8 Tekniği</div><div class="tcdesc">4 al · 7 tut · 8 ver</div></div>
+            <div class="tcitem" onclick="selTech(this,'box')"><div class="tcnm">🟦 Kare Nefes</div><div class="tcdesc">4 · 4 · 4 · 4</div></div>
+            <div class="tcitem" onclick="selTech(this,'simple')"><div class="tcnm">⭐ Basit</div><div class="tcdesc">3 al · 5 ver</div></div>
+            <div class="tipbox" id="btip"><strong>4-7-8:</strong> 4 saniye al, 7 tut, 8 ver.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ascreen" id="act-story">
+        <button class="backbtn" onclick="closeAct()">← Geri</button>
+        <div class="sg2">
+          <div class="card stcard"><span class="stem" id="s-em">🌲</span><div class="stbadge2">📖 Duygu Hikayesi</div><div class="sttitle" id="s-title">Ormanın Küçük Kaşifi</div><div class="sttext" id="s-text"></div></div>
+          <div class="scol" id="s-choices"></div>
+        </div>
+      </div>
+
+      <div class="ascreen" id="act-game">
+        <button class="backbtn" onclick="closeAct()">← Geri</button>
+        <div class="gg2">
+          <div class="card gqcard">
+            <div class="ctop"><div class="clbl">🎮 Duygu Oyunu</div><div class="stbadge" id="g-score">0/4</div></div>
+            <div style="margin-top:12px;" id="game-q"><div style="font-size:11px;color:var(--tml);margin-bottom:7px;" id="g-num">Soru 1/4</div><div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:18px;line-height:1.3;" id="g-text"></div></div>
+            <div style="margin-top:16px;" id="g-feedback"></div>
+          </div>
+          <div class="card gocard"><div class="got">Hangisi doğru?</div><div id="g-opts"></div></div>
+        </div>
+      </div>
+
+      <div class="ascreen" id="act-draw">
+        <button class="backbtn" onclick="closeAct()">← Geri</button>
+        <div class="dg2">
+          <div class="card dcrd">
+            <canvas id="dc" height="280"></canvas>
+            <div id="draw-saved" style="display:none;margin-top:9px;background:var(--cm);border-radius:var(--rmd);padding:9px;font-size:11px;color:#065F46;font-weight:600;text-align:center;">✅ Kaydedildi!</div>
+          </div>
+          <div class="card dtool">
+            <div class="dtlbl">Renk</div>
+            <div class="cgrid" id="color-btns"></div>
+            <div class="dtlbl" style="margin-top:5px;">Boyut</div>
+            <div class="szbtns">
+              <button class="szbtn sel" onclick="setBrush(4,this)">İnce</button>
+              <button class="szbtn" onclick="setBrush(8,this)">Orta</button>
+              <button class="szbtn" onclick="setBrush(14,this)">Kalın</button>
+            </div>
+            <div style="margin-top:auto;padding-top:12px;display:flex;flex-direction:column;gap:6px;">
+              <button class="dbtn dbtn-g" onclick="clearCanvas()">🗑 Temizle</button>
+              <button class="dbtn dbtn-w" onclick="saveDrawing()">⭐ Kaydet</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VELİ -->
+    <div id="parent-wrap" style="display:none;">
+      <div class="pgrid">
+        <div class="card phero">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+            <div><div class="phnm" id="par-child-name">Elif'in Durumu</div><div class="phsub">Bu hafta · 19–25 Mart 2026</div></div>
+            <div class="rpill y">🟡 Düşük Risk</div>
+          </div>
+          <div class="stats-row">
+            <div class="stit"><div class="stiv">5</div><div class="stil">Giriş</div></div>
+            <div class="stit"><div class="stiv">😊</div><div class="stil">Baskın duygu</div></div>
+            <div class="stit"><div class="stiv">8</div><div class="stil">Aktivite</div></div>
+            <div class="stit"><div class="stiv">%58</div><div class="stil">Mutluluk</div></div>
+          </div>
+        </div>
+        <div class="card privcrd">
+          <span class="privic">🔐</span>
+          <div class="privt">Gizlilik & Güvenlik</div>
+          <div class="privtx">Sohbet içerikleri size iletilmez.</div>
+          <div class="privrule"><span>🔒</span>Şifreli veri</div>
+          <div class="privrule"><span>👁</span>Tam metin yok</div>
+          <div class="privrule"><span>📋</span>KVKK uyumlu</div>
+          <div class="kvkk">🛡 KVKK Onaylı</div>
+        </div>
+        <div class="card chartcrd">
+          <div class="chrt">Haftalık Duygu Özeti</div>
+          <div class="barea" id="bar-area"></div>
+          <div style="display:flex;justify-content:space-around;"><span class="bdy">Pt</span><span class="bdy">Sa</span><span class="bdy">Ça</span><span class="bdy">Pe</span><span class="bdy">Cu</span><span class="bdy">Ct</span><span class="bdy">Pz</span></div>
+          <div class="leg"><div class="legit"><div class="legdt" style="background:#8B7CF6;"></div>Mutlu</div><div class="legit"><div class="legdt" style="background:#60A5FA;"></div>Nötr</div><div class="legit"><div class="legdt" style="background:#F9A8D4;"></div>Üzgün</div></div>
+        </div>
+        <div class="card moodcrd">
+          <div style="font-size:10px;color:rgba(30,27,75,.5);margin-bottom:3px;">Bu hafta</div>
+          <div class="moodbig">😊</div>
+          <div class="moodv">Mutlu</div>
+          <div class="moods">Haftanın %58'inde</div>
+        </div>
+        <div class="card actn-crd">
+          <div class="actt">💡 Bu hafta neler yapabilirsin?</div>
+          <div class="acti">Bugün nasılsın diye sorun, aceleden kaçının</div>
+          <div class="acti">Birlikte yemek yemek bağı güçlendirir</div>
+          <div class="acti">Okul ortamını nazikçe araştırın</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AKTİVİTE SAYFASI -->
+  <div class="page" id="pg-act">
+    <div class="apghd"><h2>Aktiviteler</h2><p>Bugün ne yapmak istersin?</p></div>
+    <div class="apgrid">
+      <div class="apcard" style="background:var(--cd);color:#fff;" onclick="goActPage('breath')"><span class="apem">🫁</span><div class="aptitle">Sihirli Nefes</div><div class="apdesc">3 teknik, sakinleş ve odaklan.</div><div class="aparr">↗</div></div>
+      <div class="apcard" style="background:var(--cy);color:var(--td);" onclick="goActPage('story')"><span class="apem">📖</span><div class="aptitle">Hikaye</div><div class="apdesc">Seçimlerini yap, macera şekillensin!</div><div class="aparr" style="background:rgba(30,27,75,.15);">↗</div></div>
+      <div class="apcard" style="background:var(--clav);color:var(--td);" onclick="goActPage('game')"><span class="apem">🎮</span><div class="aptitle">Duygu Oyunu</div><div class="apdesc">Hangi duygu hangisi?</div><div class="aparr" style="background:rgba(91,75,168,.15);">↗</div></div>
+      <div class="apcard" style="background:var(--cm);color:var(--td);" onclick="goActPage('draw')"><span class="apem">🎨</span><div class="aptitle">Çizim</div><div class="apdesc">Hissettiklerini renklerle ifade et.</div><div class="aparr" style="background:rgba(30,27,75,.12);">↗</div></div>
+    </div>
+  </div>
+
+  <!-- PROFİL SAYFASI -->
+  <div class="page" id="pg-profile">
+    <div class="profhero">
+      <div class="profav" id="prof-av">😊</div>
+      <div class="profnm" id="prof-nm">Elif</div>
+
+    </div>
+    <div class="stat3g">
+      <div class="s3"><div class="s3v">5</div><div class="s3l">Gün serisi</div></div>
+      <div class="s3"><div class="s3v">8</div><div class="s3l">Aktivite</div></div>
+      <div class="s3"><div class="s3v">3</div><div class="s3l">Rozet</div></div>
+    </div>
+    <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;color:var(--td);margin-bottom:10px;">🏅 Rozetler</div>
+    <div class="bdgrow">
+      <div class="bdgcrd"><div class="bdgic">🔥</div><div><div class="bdgnm">5 Günlük Seri</div><div class="bdgds">5 gün üst üste</div></div></div>
+      <div class="bdgcrd"><div class="bdgic">🫁</div><div><div class="bdgnm">Nefes Ustası</div><div class="bdgds">3 egzersiz</div></div></div>
+    </div>
+    <div class="bdgrow">
+      <div class="bdgcrd"><div class="bdgic">🎨</div><div><div class="bdgnm">Sanatçı</div><div class="bdgds">İlk çizim yapıldı</div></div></div>
+      <div class="bdgcrd" style="opacity:.4;"><div class="bdgic">📖</div><div><div class="bdgnm">Hikaye Kaşifi</div><div class="bdgds">Kilitli — 5 hikaye</div></div></div>
+    </div>
+    <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;color:var(--td);margin-bottom:10px;">⚙️ Ayarlar</div>
+    <div class="sttcrd">
+      <div class="srow"><div class="srl"><div class="sric" style="background:#EDE9FE;">🔔</div><div><div class="srtl">Bildirimler</div><div class="srsl">Günlük hatırlatıcı</div></div></div><button class="tog on" onclick="this.classList.toggle('on')"></button></div>
+      <div class="srow"><div class="srl"><div class="sric" style="background:#EFF6FF;">🔊</div><div><div class="srtl">Ses</div><div class="srsl">Sesli rehberlik (V2)</div></div></div><button class="tog" onclick="this.classList.toggle('on')"></button></div>
+      <div class="srow"><div class="srl"><div class="sric" style="background:#ECFDF5;">🌙</div><div><div class="srtl">Gece modu</div><div class="srsl">Göz yorgunluğu</div></div></div><button class="tog" onclick="this.classList.toggle('on')"></button></div>
+      <div class="srow"><div class="srl"><div class="sric" style="background:#FDF2F8;">🔐</div><div><div class="srtl">Gizlilik</div><div class="srsl">KVKK uyumlu</div></div></div><span class="chev">›</span></div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bnav" id="main-bnav">
+    <button class="bn on" id="bn-home" onclick="goPage('home',this)"><span class="bnic">🏠</span><span class="bnlb">Ana Sayfa</span><div class="bndot"></div></button>
+    <button class="bn" id="bn-act" onclick="goPage('act',this)"><span class="bnic">🎮</span><span class="bnlb">Aktivite</span><div class="bndot"></div></button>
+    <button class="bn" id="bn-profile" onclick="goPage('profile',this)"><span class="bnic">👤</span><span class="bnlb">Profil</span><div class="bndot"></div></button>
+  </nav>
+
+  <!-- PIN MODAL -->
+  <div id="pin-modal" style="display:none;position:fixed;inset:0;background:rgba(30,27,75,.55);backdrop-filter:blur(8px);z-index:999;display:none;align-items:center;justify-content:center;padding:24px;">
+    <div style="background:#fff;border-radius:32px;padding:32px 28px;width:100%;max-width:360px;text-align:center;box-shadow:0 24px 60px rgba(91,75,168,.25);animation:popin .3s cubic-bezier(.34,1.56,.64,1);">
+      <div style="width:60px;height:60px;border-radius:20px;background:var(--clav);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 16px;">🔐</div>
+      <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:20px;color:var(--td);margin-bottom:6px;">Veli Girişi</div>
+      <div style="font-size:13px;color:var(--tmd);margin-bottom:24px;line-height:1.5;">Veli paneline erişmek için<br>PIN kodunu gir</div>
+      <div style="display:flex;gap:10px;justify-content:center;margin-bottom:8px;" id="pin-boxes">
+        <input id="p1" class="cb" maxlength="1" type="password" oninput="pinIn(this,'p2')" onkeydown="pinBk(event,this,'')">
+        <input id="p2" class="cb" maxlength="1" type="password" oninput="pinIn(this,'p3')" onkeydown="pinBk(event,this,'p1')">
+        <input id="p3" class="cb" maxlength="1" type="password" oninput="pinIn(this,'p4')" onkeydown="pinBk(event,this,'p2')">
+        <input id="p4" class="cb" maxlength="1" type="password" oninput="pinIn(this,'')"   onkeydown="pinBk(event,this,'p3')">
+      </div>
+      <div id="pin-error" style="font-size:12px;color:#F87171;margin-bottom:14px;min-height:18px;font-weight:600;"></div>
+      <div style="font-size:11px;color:var(--tmd);margin-bottom:20px;">Demo PIN: <strong style="color:var(--cd);">1234</strong></div>
+      <div style="display:flex;gap:10px;">
+        <button onclick="closePin()" style="flex:1;padding:13px;border-radius:var(--rp);border:2px solid rgba(91,75,168,.2);background:transparent;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;color:var(--tmd);cursor:pointer;">İptal</button>
+        <button onclick="checkPin()" id="pin-ok" style="flex:1;padding:13px;border-radius:var(--rp);border:none;background:var(--cd);color:#fff;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;cursor:pointer;transition:.2s;" disabled>Giriş Yap</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /app-inner -->
+</div><!-- /app-view -->
+
+<script>
+// ══ ONBOARDING ══
+let obCurrent=1, selAvatar='😊', selInts=0;
+function loginMode(){
+  // Sadece telefon + kod ekranlarını göster, bittikten sonra direkt app
+  document.getElementById('ob-s2').dataset.login = 'true';
+  obGo(2);
+}
+
+function obGo(n){
+  const cur=document.getElementById('ob-s'+obCurrent);
+  cur.classList.add('exit');
+  setTimeout(()=>cur.classList.remove('on','exit'),400);
+  obCurrent=n;
+  setTimeout(()=>{
+    document.getElementById('ob-s'+n).classList.add('on');
+    updateObUI();
+  },50);
+}
+function obBack(){if(obCurrent>2)obGo(obCurrent-1);}
+function updateObUI(){
+  const pb=document.getElementById('ob-pbar');
+  const bb=document.getElementById('ob-back');
+  if(obCurrent===1||obCurrent===7){pb.style.display='none';bb.style.display='none';}
+  else{
+    pb.style.display='flex';
+    bb.style.display=obCurrent>2?'flex':'none';
+    for(let i=1;i<=5;i++){document.getElementById('pb'+i).style.width=i<=(obCurrent-1)?'100%':'0%';}
+  }
+}
+function checkPhone(){document.getElementById('ob-phone-btn').disabled=document.getElementById('ob-phone').value.replace(/\D/g,'').length<7;}
+function sendCode(){
+  const btn=document.getElementById('ob-phone-btn');btn.disabled=true;
+  btn.innerHTML='<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:15px;height:15px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;"></span>Gönderiliyor...</span>';
+  setTimeout(()=>{btn.innerHTML='✓ Kod Gönderildi!';btn.style.background='#10B981';setTimeout(()=>obGo(3),600);},1400);
+}
+function codeIn(el,nxt){
+  el.classList.toggle('filled',el.value.length>0);
+  if(el.value.length>=1&&nxt)document.getElementById(nxt).focus();
+  const all=['c1','c2','c3','c4'].every(id=>document.getElementById(id).value.length>0);
+  document.getElementById('ob-code-btn').disabled=!all;
+  if(all){
+    // Login modunda direkt uygulamaya geç
+    if(document.getElementById('ob-s2').dataset.login==='true'){
+      document.getElementById('ob-code-btn').textContent='Uygulamaya Geç →';
+      document.getElementById('ob-code-btn').onclick=()=>startApp();
+    }
+  }
+}
+function codeBk(e,el,prev){if(e.key==='Backspace'&&el.value===''&&prev)document.getElementById(prev).focus();}
+let selAgeRange = {label: '8 yaş', value: '8-11', desc: 'Kısa cümle + emoji'};
+function selAge(el){
+  document.querySelectorAll('.age-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('ob-age-btn').disabled=false;
+  // Yaş aralığı bilgisini al
+  const ageRng = el.querySelector('.age-rng').textContent.trim();
+  let label = '8 yaş', value = '8-11', desc = '';
+  if(ageRng.includes('5')) { label = '6 yaş'; value = '5-7'; desc = 'Emoji ve renk seçimi'; }
+  else if(ageRng.includes('8')) { label = '8 yaş'; value = '8-11'; desc = 'Kısa cümle + emoji'; }
+  else if(ageRng.includes('12')) { label = '13 yaş'; value = '12-14'; desc = 'Günlük yazma + AI sohbet'; }
+  selAgeRange = {label, value, desc};
+}
+function togInt(el){
+  el.classList.toggle('sel');selInts=document.querySelectorAll('.int-card.sel').length;
+  const cnt=document.getElementById('int-cnt');const btn=document.getElementById('ob-int-btn');
+  cnt.innerHTML=selInts===0?'En az 1 seç':`<strong>${selInts} alan seçildi</strong> ✓`;
+  btn.disabled=selInts===0;
+}
+function selAv(el,em){document.querySelectorAll('.av-opt').forEach(a=>a.classList.remove('sel'));el.classList.add('sel');selAvatar=em;document.getElementById('ready-orb').textContent=em;}
+function checkName(){
+  const nm=document.getElementById('ob-name').value.trim();
+  const btn=document.getElementById('ob-name-btn');const prev=document.getElementById('name-prev');
+  if(nm.length>0){
+    prev.innerHTML=`Merhaba <strong>${nm}</strong>! Lumio seninle tanışmaktan çok mutlu 💜`;
+    btn.disabled=false;
+    document.getElementById('ready-nm').textContent=nm+'!';
+  } else {prev.innerHTML='İsim girince önizleme burada görünür';btn.disabled=true;}
+}
+function startApp(){
+  const nm=document.getElementById('ob-name').value.trim()||'Elif';
+  document.getElementById('app-name').textContent=nm;
+  document.getElementById('prof-nm').textContent=nm;
+  document.getElementById('par-child-name').textContent=nm+"'in Durumu";
+  document.getElementById('prof-av').textContent=selAvatar;
+  document.getElementById('top-av').textContent=nm[0].toUpperCase();
+
+  document.getElementById('ob-view').classList.remove('on');
+  document.getElementById('app-view').classList.add('on');
+}
+
+// ══ APP ══
+function goPage(name,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.bn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('pg-'+name).classList.add('on');
+  btn.classList.add('on');
+}
+function goActPage(name){goPage('home',document.getElementById('bn-home'));openAct(name);}
+// PIN MODAL
+const PARENT_PIN = '1234';
+function askPin(){
+  document.getElementById('pin-modal').style.display='flex';
+  ['p1','p2','p3','p4'].forEach(id=>{const el=document.getElementById(id);el.value='';el.classList.remove('filled');});
+  document.getElementById('pin-error').textContent='';
+  document.getElementById('pin-ok').disabled=true;
+  setTimeout(()=>document.getElementById('p1').focus(),100);
+}
+function closePin(){
+  document.getElementById('pin-modal').style.display='none';
+}
+function pinIn(el,nxt){
+  el.classList.toggle('filled',el.value.length>0);
+  if(el.value.length>=1&&nxt)document.getElementById(nxt).focus();
+  const all=['p1','p2','p3','p4'].every(id=>document.getElementById(id).value.length>0);
+  document.getElementById('pin-ok').disabled=!all;
+}
+function pinBk(e,el,prev){if(e.key==='Backspace'&&el.value===''&&prev)document.getElementById(prev).focus();}
+function checkPin(){
+  const pin=['p1','p2','p3','p4'].map(id=>document.getElementById(id).value).join('');
+  if(pin===PARENT_PIN){
+    closePin();
+    setMode('parent', document.querySelectorAll('.mt-btn')[1]);
+  } else {
+    document.getElementById('pin-error').textContent='Hatalı PIN, tekrar dene';
+    ['p1','p2','p3','p4'].forEach(id=>{
+      const el=document.getElementById(id);
+      el.value=''; el.classList.remove('filled');
+      el.style.borderColor='#F87171';
+      setTimeout(()=>el.style.borderColor='',1000);
+    });
+    document.getElementById('pin-ok').disabled=true;
+    document.getElementById('p1').focus();
+  }
+}
+
+function setMode(m,btn){
+  document.querySelectorAll('.mt-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  if(m==='parent'){
+    document.getElementById('child-wrap').style.display='none';
+    document.getElementById('parent-wrap').style.display='block';
+    document.getElementById('main-bnav').style.display='none';
+  } else {
+    document.getElementById('child-wrap').style.display='block';
+    document.getElementById('parent-wrap').style.display='none';
+    document.getElementById('main-bnav').style.display='flex';
+    closeAct();
+  }
+}
+
+// CHAT
+function getEmoR(){
+  // Yaş aralığına göre öneri cümleleri
+  if(selAgeRange.value==='5-7'){
+    return {
+      happy:["Süper! Hangi renk seni mutlu ediyor? 🌈"],
+      sad:["Üzgünsen bir emoji seçelim mi? 🤗"],
+      angry:["Kızgınken hangi rengi seçersin? 🔴"],
+      scared:["Korktuğunda yanında kim olsun isterdin? 🧸"],
+      neutral:["Bugün hangi rengi seçmek istersin?"],
+      unknown:["Birlikte bir emoji seçelim mi? 🐻"]
+    };
+  } else if(selAgeRange.value==='12-14'){
+    return {
+      happy:["Mutluluğunu bir günlükte anlatmak ister misin? 😊"],
+      sad:["Neden üzgün hissettiğini yazabilirsin."],
+      angry:["Kızgınlığını yazmak rahatlatabilir."],
+      scared:["Korkunu paylaşmak ister misin?"],
+      neutral:["Bugün sıradan bir gün müydü?"],
+      unknown:["Duygularını yazmak ister misin?"]
+    };
+  }
+  // Varsayılan (8-11)
+  return {
+    happy:["Harika! Seni ne mutlu etti? 😊","Mutluluk bulaşıcıdır! 🌟"],
+    sad:["Seni üzen bir şey mi oldu? 💜","Üzgün hissetmek normaldir 🤗"],
+    angry:["Kızgın hissetmek zor. Ne oldu? 😤","Birlikte nefes alalım mı?"],
+    scared:["Güvendesin! 🌈","Sen güçlüsün 💪"],
+    neutral:["Sakin bir gün mü? 😐"],
+    unknown:["Birlikte bakalım 🔍 Bugün okul nasıldı?"]
+  };
+}
+function getEmoSug(){
+  // Yaş aralığına göre öneri aktiviteleri
+  if(selAgeRange.value==='5-7'){
+    return {
+      happy:{msg:"Mutluysan bir renk seçelim!",acts:[{i:"🎨",l:"Çiz",a:"draw"}]},
+      sad:{msg:"Üzgünsen bir emojiyle anlatabilirsin.",acts:[{i:"🎮",l:"Oyun",a:"game"}]},
+      angry:{msg:"Kızgınken resim yapmak iyi gelir.",acts:[{i:"🎨",l:"Çiz",a:"draw"}]},
+      scared:{msg:"Korktuğunda bir renk seç.",acts:[{i:"🎨",l:"Çiz",a:"draw"}]},
+      neutral:{msg:"Bir renk seçmek ister misin?",acts:[{i:"🎨",l:"Çiz",a:"draw"}]},
+      unknown:{msg:"Bir emoji seçelim mi?",acts:[{i:"🎮",l:"Oyun",a:"game"}]}
+    };
+  } else if(selAgeRange.value==='12-14'){
+    return {
+      happy:{msg:"Mutluluğunu günlükte yazabilirsin!",acts:[{i:"📖",l:"Günlük",a:"story"}]},
+      sad:{msg:"Üzgün hislerini yazmak ister misin?",acts:[{i:"📖",l:"Günlük",a:"story"}]},
+      angry:{msg:"Kızgınlığını yazmak rahatlatabilir.",acts:[{i:"🎨",l:"Çiz",a:"draw"}]},
+      scared:{msg:"Korkunu yazabilirsin.",acts:[{i:"📖",l:"Günlük",a:"story"}]},
+      neutral:{msg:"Bugünü yazmak ister misin?",acts:[{i:"📖",l:"Günlük",a:"story"}]},
+      unknown:{msg:"Duygularını yazmak ister misin?",acts:[{i:"📖",l:"Günlük",a:"story"}]}
+    };
+  }
+  // Varsayılan (8-11)
+  return {
+    happy:{msg:"Mutlu hissetmek harika! Bu enerjiyi değerlendirmek ister misin?",acts:[{i:"📖",l:"Hikaye",a:"story"},{i:"🎮",l:"Oyun",a:"game"},{i:"🎨",l:"Çiz",a:"draw"}]},
+    sad:{msg:"Üzgün hissetmek normaldir. Sana yardımcı olabilecek şeyler:",acts:[{i:"🫁",l:"Nefes al",a:"breath"},{i:"📖",l:"Hikaye oku",a:"story"}]},
+    angry:{msg:"Kızgınlığını atmanın en iyi yolu birlikte nefes almak:",acts:[{i:"🫁",l:"Nefes egzersizi",a:"breath"},{i:"🎨",l:"Hissini çiz",a:"draw"}]},
+    scared:{msg:"Korkmak normaldir, güvendesin:",acts:[{i:"🫁",l:"Sakinleş",a:"breath"},{i:"📖",l:"Hikaye oku",a:"story"}]},
+    neutral:{msg:"Böyle günler de olur! Bir aktivite seni canlandırabilir:",acts:[{i:"🎮",l:"Oyun",a:"game"},{i:"🎨",l:"Çizim",a:"draw"}]},
+    unknown:{msg:"Nasıl hissettiğini bilmemek de bir his:",acts:[{i:"🫁",l:"Nefes al",a:"breath"},{i:"🎮",l:"Oyun",a:"game"}]}
+  };
+}
+const aiR=["Anlıyorum seni 💜","Bunu paylaştığın için teşekkürler 🌟","Yalnız değilsin.","Güzel anlattın! Peki sonra?","Seninle olmaktan mutluyum 😊"];
+let mi=0;
+let lastEmotion = 'unknown'; // Son seçilen duygu
+
+function pickEmo(btn,e){
+  document.querySelectorAll('.eb').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  lastEmotion = e; // Duyguyu kaydet
+  const emoR = getEmoR();
+  const emoSug = getEmoSug();
+  const p = emoR[e];
+  addBub(p[Math.floor(Math.random()*p.length)],'ai');
+  const sg = emoSug[e];
+  document.getElementById('smsg').textContent=sg.msg;
+  const sa=document.getElementById('sacts');
+  sa.innerHTML='';
+  sg.acts.forEach(a=>{
+    const b=document.createElement('button');
+    b.className='sact';
+    b.innerHTML=a.i+' '+a.l;
+    b.onclick=()=>openAct(a.a);
+    sa.appendChild(b);
+  });
+  document.getElementById('suggest-panel').style.display='block';
+}
+
+function generateLumioResponse(userMsg){
+  // Lumio tarzı yanıt oluştur
+  const emotionEmojis = {happy:'😊',sad:'💜',angry:'😤',scared:'🌈',neutral:'😐',unknown:'🤔'};
+  const emotion = lastEmotion;
+  const ageGroup = selAgeRange.value;
+  
+  // Duygulara göre empati cümlesi
+  const empathyMap = {
+    happy: "Mutluluğunun paylaştığın için teşekkürler!",
+    sad: "Bu seni üzmüş olabilir. Böyle hissetmen çok normal.",
+    angry: "Kızgın hissetmek zor olabilir. Anlıyorum seni.",
+    scared: "Korkmuş olmak çok doğal bir his.",
+    neutral: "Sakin bir gün yaşıyor gibi görünüyorsun.",
+    unknown: "Seni anlamaya çalışıyorum."
+  };
+  
+  // Yaş grubuna göre dil düzeyleri
+  const supportMap = {
+    '5-7': {
+      response: [
+        `${empathyMap[emotion]} ${emotionEmojis[emotion]} Seninle birlikte olmaktan mutluyum!`,
+        `${empathyMap[emotion]} 🌟 Bana bir daha anlatır mısın?`
+      ],
+      suggestion: " Isterseniz bir renk seçip hissini çizebilirsin!"
+    },
+    '8-11': {
+      response: [
+        `${empathyMap[emotion]} Bunun hakkında daha fazla konuşmak ister misin?`,
+        `${empathyMap[emotion]} Her gün farklı hissedebiliriz, bu çok doğal.`,
+        `${empathyMap[emotion]} Seninle her zaman konuşabilirsin.`
+      ],
+      suggestion: " Isterseniz birlikte bir nefes egzersizi yapabiliriz veya bunun hakkında daha konuşabiliriz."
+    },
+    '12-14': {
+      response: [
+        `${empathyMap[emotion]} 💜 Bunu yazarak daha iyi anlatabilirsin misin?`,
+        `${empathyMap[emotion]} O an neler hissettin? Merak ediyorum.`,
+        `${empathyMap[emotion]} Seninle bu konuda tartışmak isterim.`
+      ],
+      suggestion: " Günlüğüne yazarak duygularını daha derinden keşfedebilirsin."
+    }
+  };
+  
+  const groupResponses = supportMap[ageGroup] || supportMap['8-11'];
+  const randomResponse = groupResponses.response[Math.floor(Math.random() * groupResponses.response.length)];
+  const finalResponse = randomResponse + groupResponses.suggestion;
+  
+  return finalResponse;
+}
+
+function sendMsg(){
+  const inp=document.getElementById('cin');
+  const v=inp.value.trim();
+  if(!v)return;
+  addBub(v,'user');
+  inp.value='';
+  setTimeout(()=>{
+    const lumioResponse = generateLumioResponse(v);
+    addBub(lumioResponse,'ai');
+    mi++;
+  },650);
+}
+function addBub(t,tp){const a=document.getElementById('chat-area');const d=document.createElement('div');d.className=tp==='ai'?'cbai':'cbusr';d.textContent=t;a.appendChild(d);a.scrollTop=a.scrollHeight;}
+
+// ACT
+function openAct(name){document.getElementById('child-main').style.display='none';document.querySelectorAll('.ascreen').forEach(s=>s.classList.remove('on'));document.getElementById('act-'+name).classList.add('on');if(name==='breath')resetBreath();if(name==='story')initStory();if(name==='game')initGame();if(name==='draw')initDraw();goPage('home',document.getElementById('bn-home'));}
+function closeAct(){document.getElementById('child-main').style.display='block';document.querySelectorAll('.ascreen').forEach(s=>s.classList.remove('on'));}
+
+// NEFES
+const techs={'478':{phases:[{w:'Nefes Al',e:'🌬️',d:4},{w:'Tut',e:'🤫',d:7},{w:'Ver',e:'😮‍💨',d:8}],rounds:4,tip:'<strong>4-7-8:</strong> 4 al, 7 tut, 8 ver.'},'box':{phases:[{w:'Nefes Al',e:'⬆️',d:4},{w:'Tut',e:'➡️',d:4},{w:'Ver',e:'⬇️',d:4},{w:'Tut',e:'⬅️',d:4}],rounds:4,tip:'<strong>Kare:</strong> Her adım 4 saniye.'},'simple':{phases:[{w:'Nefes Al',e:'🌬️',d:3},{w:'Ver',e:'😮‍💨',d:5}],rounds:5,tip:'<strong>Basit:</strong> 3 al, 5 ver.'}};
+let bT='478',bRun=false,bTmr=null,bRnd=0,bPh=0;
+function selTech(el,t){if(bRun)return;document.querySelectorAll('.tcitem').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');bT=t;document.getElementById('btip').innerHTML=techs[t].tip;resetBreath();}
+function buildDots(){const d=document.getElementById('bdots');d.innerHTML='';for(let i=0;i<techs[bT].rounds;i++){const x=document.createElement('div');x.className='bdot';x.id='bd'+i;d.appendChild(x);}}
+function startBreath(){bRun=true;bRnd=0;bPh=0;document.getElementById('bstart').disabled=true;document.getElementById('bstop').disabled=false;document.getElementById('bcomp').style.display='none';buildDots();runPh();}
+function runPh(){if(!bRun)return;const ph=techs[bT].phases[bPh];document.getElementById('bem').textContent=ph.e;document.getElementById('bwrd').textContent=ph.w;document.getElementById('bcnt').textContent=ph.d+' saniye';document.getElementById('bcirc').style.transform=bPh===0?'scale(1.06)':'scale(1)';let el=0;const tot=ph.d*1000;clearInterval(bTmr);bTmr=setInterval(()=>{if(!bRun){clearInterval(bTmr);return;}el+=50;document.getElementById('bcnt').textContent=Math.ceil((tot-el)/1000)+' saniye';document.getElementById('bpfill').style.width=Math.min(el/tot*100,100)+'%';if(el>=tot){clearInterval(bTmr);nextPh();}},50);}
+function nextPh(){const t=techs[bT];bPh++;if(bPh>=t.phases.length){bPh=0;const d=document.getElementById('bd'+bRnd);if(d){d.classList.remove('cur');d.classList.add('done');}bRnd++;if(bRnd>=t.rounds){doneBreath();return;}}const d=document.getElementById('bd'+bRnd);if(d)d.classList.add('cur');runPh();}
+function doneBreath(){bRun=false;clearInterval(bTmr);document.getElementById('bem').textContent='🌟';document.getElementById('bwrd').textContent='Tamamlandı!';document.getElementById('bcnt').textContent='';document.getElementById('bpfill').style.width='100%';document.getElementById('bstart').disabled=false;document.getElementById('bstop').disabled=true;document.getElementById('bcomp').style.display='block';}
+function stopBreath(){bRun=false;clearInterval(bTmr);document.getElementById('bstart').disabled=false;document.getElementById('bstop').disabled=true;document.getElementById('bem').textContent='🫁';document.getElementById('bwrd').textContent='Hazır mısın?';document.getElementById('bcnt').textContent="Başla'ya bas";document.getElementById('bpfill').style.width='0%';document.getElementById('bcirc').style.transform='scale(1)';}
+function resetBreath(){stopBreath();buildDots();document.getElementById('bcomp').style.display='none';}
+
+// HİKAYE
+const stories=[{em:'🌲',t:'Ormanın Küçük Kaşifi',tx:'Küçük Bora ormana girdi. İçi sıkışmış gibi hissediyordu...',ch:['Derin nefes alıp içeri girdi','Geri dönüp arkadaşını çağırdı'],nx:[1,2]},{em:'🦊',t:'Tilkiyle Karşılaşma',tx:'Küçük bir tilki gördü. "Neden üzgün görünüyorsun?" dedi.',ch:['Tilkiye her şeyi anlattı','Sırıttı ve yürüdü'],nx:[3,3]},{em:'👫',t:'Birlikte Daha Güzel',tx:'Arkadaşı gelince çok daha iyi hissetti. Yardım istemek cesarettir!',ch:['Ormana birlikte girdiler'],nx:[3]},{em:'⭐',t:'Macera Tamamlandı!',tx:'Bora bugün öğrendi: Duygularını paylaşmak güçtür 🦊',ch:['Tekrar oyna 🔄'],nx:['reset']}];
+let sS=0;
+function initStory(){sS=0;renderStory();}
+function renderStory(){const s=stories[sS];document.getElementById('s-em').textContent=s.em;document.getElementById('s-title').textContent=s.t;document.getElementById('s-text').textContent=s.tx;const ch=document.getElementById('s-choices');ch.innerHTML='';s.ch.forEach((c,i)=>{const b=document.createElement('button');b.className='sc';b.innerHTML=c+'<div class="schint">Seçim '+(i+1)+'</div>';b.onclick=()=>{if(s.nx[i]==='reset'){sS=0;renderStory();}else{sS=s.nx[i];renderStory();}};ch.appendChild(b);});}
+
+// OYUN
+const gQs=[{q:'Arkadaşın bugün seninle konuşmadı.',a:'Üzgün',opts:['Üzgün','Kızgın','Mutlu','Korkmuş']},{q:'Sınav sonuçların çok iyi geldi!',a:'Mutlu',opts:['Üzgün','Mutlu','Kızgın','Nötr']},{q:'Karanlıkta yalnız kaldın.',a:'Korkmuş',opts:['Mutlu','Korkmuş','Kızgın','Üzgün']},{q:'Birisi oyuncağını izinsiz aldı.',a:'Kızgın',opts:['Mutlu','Üzgün','Kızgın','Nötr']}];
+const gEmo={Mutlu:'😊',Üzgün:'😢',Kızgın:'😡',Korkmuş:'😨',Nötr:'😐'};
+let gI=0,gSc=0;
+function initGame(){gI=0;gSc=0;renderGame();}
+function renderGame(){if(gI>=gQs.length){document.getElementById('game-q').innerHTML=`<div style="text-align:center;padding:14px 0;"><div style="font-size:40px;margin-bottom:8px;">🏆</div><div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:20px;color:#fff;margin-bottom:5px;">Oyun Bitti!</div><div style="color:rgba(255,255,255,.7);font-size:12px;">${gSc}/4 doğru!</div></div>`;document.getElementById('g-opts').innerHTML=`<button onclick="initGame()" style="width:100%;background:var(--cy);border:none;border-radius:var(--rp);padding:12px;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;color:var(--td);cursor:pointer;">Tekrar Oyna 🔄</button>`;document.getElementById('g-score').textContent=gSc+'/4';return;}const q=gQs[gI];document.getElementById('g-num').textContent=`Soru ${gI+1}/4`;document.getElementById('g-text').textContent=q.q;document.getElementById('g-feedback').innerHTML='';document.getElementById('g-score').textContent=gSc+'/'+gI;const sh=[...q.opts].sort(()=>Math.random()-.5);document.getElementById('g-opts').innerHTML=sh.map(o=>`<button onclick="checkA('${o}')" class="gobtn"><div style="font-size:20px;">${gEmo[o]||'❓'}</div><div class="golbl">${o}</div></button>`).join('');}
+function checkA(a){const q=gQs[gI];const ok=a===q.a;if(ok)gSc++;document.getElementById('g-feedback').innerHTML=`<div style="background:${ok?'rgba(110,231,183,.2)':'rgba(248,113,113,.2)'};border-radius:10px;padding:8px 12px;font-size:11px;font-weight:600;color:${ok?'#6EE7B7':'#F87171'};">${ok?'✅ Doğru!':'❌ Doğru: '+q.a+' '+gEmo[q.a]}</div>`;setTimeout(()=>{gI++;renderGame();},1200);}
+
+// ÇİZİM
+let drawing=false,lx=0,ly=0,brushC='#8B7CF6',brushS=4;
+function setBrush(s,btn){brushS=s;document.querySelectorAll('.szbtn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');}
+function initDraw(){document.getElementById('draw-saved').style.display='none';const cv=document.getElementById('dc');const ctx=cv.getContext('2d');cv.width=cv.offsetWidth||400;ctx.clearRect(0,0,cv.width,cv.height);const cols=['#8B7CF6','#60A5FA','#F9A8D4','#6EE7B7','#F9E87A','#FB923C','#1E1B4B','#F87171','#fff'];const cb=document.getElementById('color-btns');cb.innerHTML='';cols.forEach((c,i)=>{const b=document.createElement('button');b.className='cbbtn'+(i===0?' sel':'');b.style.background=c;b.onclick=()=>{brushC=c;document.querySelectorAll('.cbbtn').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');};cb.appendChild(b);});const draw=e=>{if(!drawing)return;const r=cv.getBoundingClientRect();const sx=cv.width/r.width,sy=cv.height/r.height;const x=((e.clientX||e.touches[0].clientX)-r.left)*sx;const y=((e.clientY||e.touches[0].clientY)-r.top)*sy;ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);ctx.strokeStyle=brushC;ctx.lineWidth=brushS;ctx.lineCap='round';ctx.stroke();[lx,ly]=[x,y];};const start=e=>{drawing=true;const r=cv.getBoundingClientRect();const sx=cv.width/r.width,sy=cv.height/r.height;lx=((e.clientX||e.touches[0].clientX)-r.left)*sx;ly=((e.clientY||e.touches[0].clientY)-r.top)*sy;};cv.onmousedown=start;cv.ontouchstart=e=>{e.preventDefault();start(e);};cv.onmousemove=draw;cv.ontouchmove=e=>{e.preventDefault();draw(e);};cv.onmouseup=()=>drawing=false;cv.ontouchend=()=>drawing=false;cv.onmouseleave=()=>drawing=false;}
+function clearCanvas(){const c=document.getElementById('dc');c.getContext('2d').clearRect(0,0,c.width,c.height);document.getElementById('draw-saved').style.display='none';}
+function saveDrawing(){document.getElementById('draw-saved').style.display='block';}
+
+// BAR CHART
+const days=[{h:70,n:20,s:10},{h:50,n:30,s:20},{h:60,n:25,s:15},{h:40,n:20,s:40},{h:80,n:15,s:5},{h:0,n:0,s:0},{h:0,n:0,s:0}];
+const ba=document.getElementById('bar-area');
+days.forEach(d=>{const col=document.createElement('div');col.className='bcol';if(d.h+d.n+d.s===0){col.innerHTML=`<div class="bsg" style="height:4px;background:#E5E7EB;"></div>`;}else{col.innerHTML=`<div class="bsg" style="height:${d.s}%;background:#F9A8D4;"></div><div class="bsg" style="height:${d.n}%;background:#60A5FA;"></div><div class="bsg" style="height:${d.h}%;background:#8B7CF6;"></div>`;}ba.appendChild(col);});
+</script>
+</body>
+</html>
