@@ -6,6 +6,9 @@
 <title>Lumio AI</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+/* ════════════════════════════════════
+   LIGHT MODE (Default)
+════════════════════════════════════ */
 :root {
   --bg:#C4B5F5; --cd:#5B4BA8; --cd2:#7C6ED4; --cl:#F4F2FF;
   --cy:#F9E87A; --cp:#F9C8E0; --cm:#B8F0D8; --clav:#DDD6FE;
@@ -13,6 +16,39 @@
   --ry:#FCD34D; --ro:#FB923C; --rr:#F87171;
   --rxl:36px; --rlg:24px; --rmd:16px; --rp:999px;
   --sh:0 8px 32px rgba(91,75,168,.14); --ss:0 4px 14px rgba(91,75,168,.10);
+}
+
+/* ════════════════════════════════════
+   NIGHT MODE (Dark UI)
+════════════════════════════════════ */
+[data-theme="night"] {
+  --bg:#1A1625; --cd:#A78BFA; --cd2:#C084FC; --cl:#2D1F4A;
+  --cy:#FBBF24; --cp:#F472B6; --cm:#6EE7B7; --clav:#5B3FA0;
+  --td:#FFFFFF; --tl:#FFFFFF; --tmd:#E5E7EB; --tml:#F3F4F6;
+  --ry:#FBBF24; --ro:#FB923C; --rr:#F87171;
+  --sh:0 8px 32px rgba(0,0,0,.4); --ss:0 4px 14px rgba(0,0,0,.3);
+}
+
+/* ════════════════════════════════════
+   DREAMY MODE (Soft pastels)
+════════════════════════════════════ */
+[data-theme="dreamy"] {
+  --bg:#F5F3FF; --cd:#9B7DC1; --cd2:#B8A3D9; --cl:#FAF5FF;
+  --cy:#FFD9B3; --cp:#F5D5E8; --cm:#D4F3E8; --clav:#EEE5FF;
+  --td:#5A4A6B; --tl:#FFF; --tmd:#A98DB5; --tml:#D4C7E0;
+  --ry:#FFD9B3; --ro:#F5B87C; --rr:#E8A5A5;
+  --sh:0 8px 32px rgba(155,125,193,.12); --ss:0 4px 14px rgba(155,125,193,.08);
+}
+
+/* ════════════════════════════════════
+   COZY MODE (Warm & comfortable)
+════════════════════════════════════ */
+[data-theme="cozy"] {
+  --bg:#FEF6E6; --cd:#D97A54; --cd2:#E8915E; --cl:#FFF8F0;
+  --cy:#FFD89D; --cp:#FFB5D8; --cm:#B8E8D4; --clav:#FFE4D9;
+  --td:#5C3D2E; --tl:#FFF; --tmd:#A07A6F; --tml:#E8C9B8;
+  --ry:#FFD89D; --ro:#F5A455; --rr:#E89090;
+  --sh:0 8px 32px rgba(217,122,84,.15); --ss:0 4px 14px rgba(217,122,84,.10);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;}
@@ -45,7 +81,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
 
 /* BOTTOM BTN */
 .ob-bottom{position:absolute;bottom:0;left:0;right:0;padding:18px 24px 30px;background:linear-gradient(to top,var(--bg) 70%,transparent);}
-.btn-dark{width:100%;padding:16px;border-radius:20px;border:none;background:var(--cd);color:#fff;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-dark{width:100%;padding:16px;border-radius:20px;border:none;background:var(--cd);color:var(--tl);font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px;}
 .btn-dark:hover{background:var(--cd2);transform:scale(1.02);}
 .btn-dark:disabled{opacity:.4;transform:none;cursor:not-allowed;}
 .btn-white{width:100%;padding:15px;border-radius:20px;border:none;background:#fff;color:var(--cd);font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;cursor:pointer;transition:.2s;margin-bottom:10px;}
@@ -57,7 +93,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
 #ob-s1{background:var(--cd);justify-content:center;align-items:center;text-align:center;padding:40px 30px;}
 .ob-orb{width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:60px;margin:0 auto 28px;animation:float 3s ease-in-out infinite;}
 @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
-.ob-logo{font-family:'Nunito',sans-serif;font-weight:900;font-size:44px;color:#fff;margin-bottom:6px;letter-spacing:-2px;}
+.ob-logo{font-family:'Nunito',sans-serif;font-weight:900;font-size:44px;color:var(--tl);margin-bottom:6px;letter-spacing:-2px;}
 .ob-logo span{color:var(--cy);}
 .ob-tag{font-size:14px;color:rgba(255,255,255,.7);margin-bottom:40px;line-height:1.6;}
 
@@ -94,7 +130,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
 .age-rng{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;color:var(--td);margin-bottom:1px;}
 .age-desc{font-size:11px;color:var(--tmd);}
 .age-chk{width:22px;height:22px;border-radius:50%;border:2px solid rgba(91,75,168,.2);display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;transition:.2s;margin-left:auto;flex-shrink:0;}
-.age-card.sel .age-chk{background:var(--cd);border-color:var(--cd);color:#fff;}
+.age-card.sel .age-chk{background:var(--cd);border-color:var(--cd);color:var(--tl);}
 
 /* INTERESTS */
 .int-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:26px;}
@@ -123,14 +159,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
 #ob-s7{background:var(--cd);justify-content:center;align-items:center;text-align:center;padding:36px 28px;}
 .ready-orb{width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:52px;margin:0 auto 24px;animation:popin .6s cubic-bezier(.34,1.56,.64,1);}
 @keyframes popin{from{transform:scale(0);opacity:0;}to{transform:scale(1);opacity:1;}}
-.ready-t{font-family:'Nunito',sans-serif;font-weight:900;font-size:30px;color:#fff;margin-bottom:7px;line-height:1.2;}
+.ready-t{font-family:'Nunito',sans-serif;font-weight:900;font-size:30px;color:var(--tl);margin-bottom:7px;line-height:1.2;}
 .ready-nm{color:var(--cy);}
 .ready-sub{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:32px;line-height:1.6;}
 .feat-pills{display:flex;flex-direction:column;gap:9px;margin-bottom:32px;}
 .fpill{background:rgba(255,255,255,.1);border-radius:13px;padding:11px 16px;display:flex;align-items:center;gap:11px;text-align:left;}
 .fpic{font-size:20px;flex-shrink:0;}
 .fptx{font-size:12px;color:rgba(255,255,255,.85);line-height:1.4;}
-.fptx strong{color:#fff;font-weight:600;}
+.fptx strong{color:var(--tl);font-weight:600;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
 /* ══════════════════════════════════
@@ -145,9 +181,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
 .logo span{color:#A78BFA;}
 .mode-tog{display:flex;background:rgba(255,255,255,.6);border-radius:var(--rp);padding:3px;gap:3px;}
 .mt-btn{padding:8px 16px;border-radius:var(--rp);border:none;background:transparent;color:var(--td);font-weight:600;font-size:12px;cursor:pointer;transition:.2s;font-family:'DM Sans',sans-serif;}
-.mt-btn.on{background:#fff;box-shadow:var(--ss);}
+.mt-btn.on{background:var(--cl);box-shadow:var(--ss);}
 .ib{width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,.5);color:var(--td);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;transition:.2s;}
 .ib:hover{background:#fff;}
+
+/* THEME TOGGLE */
+.theme-tog{display:flex;background:rgba(255,255,255,.4);border-radius:var(--rp);padding:2px;gap:2px;margin:0 10px;}
+.tt-btn{width:32px;height:32px;border-radius:50%;border:none;background:transparent;color:var(--td);font-size:14px;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;}
+.tt-btn.on{background:#fff;box-shadow:var(--ss);}
+.tt-btn:hover{background:rgba(255,255,255,.6);}
 
 /* PAGES */
 .page{display:none;animation:fu .3s ease;}
@@ -155,9 +197,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
 @keyframes fu{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 
 /* BOTTOM NAV */
-.bnav{position:fixed;bottom:0;left:0;right:0;background:rgba(244,242,255,.96);backdrop-filter:blur(20px);border-top:1px solid rgba(91,75,168,.12);display:flex;padding:8px 0 14px;z-index:200;}
+.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg);backdrop-filter:blur(20px);border-top:1px solid rgba(91,75,168,.12);display:flex;padding:8px 0 14px;z-index:200;}
 .bn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;border:none;background:transparent;cursor:pointer;padding:5px 4px;transition:.2s;}
-.bn:hover{background:rgba(91,75,168,.07);border-radius:12px;}
+.bn:hover{background:var(--cl);border-radius:12px;}
 .bnic{font-size:22px;line-height:1;transition:.2s;}
 .bnlb{font-size:10px;font-weight:700;color:var(--tmd);font-family:'Nunito',sans-serif;transition:.2s;}
 .bn.on .bnlb{color:var(--cd);}
@@ -179,24 +221,24 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
 .greeting em{font-style:normal;color:var(--cy);}
 .gsub{font-size:13px;color:var(--tml);margin-bottom:20px;}
 .egrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
-.eb{background:#fff;border:none;border-radius:13px;padding:13px 5px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:.2s;box-shadow:var(--ss);}
+.eb{background:var(--cl);border:none;border-radius:13px;padding:13px 5px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:.2s;box-shadow:var(--ss);}
 .eb:hover{transform:translateY(-3px);}
 .eb.sel{outline:3px solid var(--cy);}
 .edot{width:22px;height:22px;border-radius:50%;}
 .elbl{font-size:9px;font-weight:700;color:var(--td);}
 .ebm{grid-column:1/-1;flex-direction:row;justify-content:center;padding:10px;border:2px dashed rgba(255,255,255,.3);background:rgba(255,255,255,.1);gap:5px;}
-.ebm .elbl{color:#fff;font-size:11px;}
+.ebm .elbl{color:var(--tl);font-size:11px;}
 .suggest{border-top:1px solid rgba(255,255,255,.15);margin-top:14px;padding-top:12px;animation:fu .35s ease;}
 .slbl{font-size:9px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;}
-.smsg{font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;color:#fff;margin-bottom:9px;line-height:1.5;}
+.smsg{font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;color:var(--tl);margin-bottom:9px;line-height:1.5;}
 .sacts{display:flex;gap:6px;flex-wrap:wrap;}
-.sact{background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25);border-radius:9px;padding:6px 11px;font-size:11px;font-weight:600;color:#fff;display:flex;align-items:center;gap:4px;cursor:pointer;transition:.2s;}
+.sact{background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25);border-radius:9px;padding:6px 11px;font-size:11px;font-weight:600;color:var(--tl);display:flex;align-items:center;gap:4px;cursor:pointer;transition:.2s;}
 .sact:hover{background:rgba(255,255,255,.25);}
 .al-card{background:var(--cl);grid-column:1;grid-row:2;}
 .al-title{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;color:var(--cd);margin-bottom:12px;}
 .ai{display:flex;align-items:center;padding:12px 0;border-bottom:1px dashed rgba(91,75,168,.1);gap:11px;cursor:pointer;transition:.15s;}
 .ai:last-child{border-bottom:none;padding-bottom:0;}
-.ai:hover .arr{background:var(--cd);color:#fff;}
+.ai:hover .arr{background:var(--cd);color:var(--tl);}
 .aico{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
 .ainf{flex:1;}
 .anm{font-weight:600;font-size:13px;color:var(--td);margin-bottom:1px;}
@@ -209,20 +251,20 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
 .cch{font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:var(--cd);margin-bottom:11px;}
 .cbubs{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;max-height:160px;overflow-y:auto;scrollbar-width:none;}
 .cbubs::-webkit-scrollbar{display:none;}
-.cbai{background:#fff;color:var(--td);padding:8px 11px;border-radius:0 11px 11px 11px;font-size:11px;line-height:1.5;align-self:flex-start;max-width:90%;box-shadow:var(--ss);}
-.cbusr{background:var(--cd);color:#fff;padding:8px 11px;border-radius:11px 0 11px 11px;font-size:11px;line-height:1.5;align-self:flex-end;max-width:90%;}
+.cbai{background:var(--bg);color:var(--td);padding:8px 11px;border-radius:0 11px 11px 11px;font-size:11px;line-height:1.5;align-self:flex-start;max-width:90%;box-shadow:var(--ss);}
+.cbusr{background:var(--cd);color:var(--tl);padding:8px 11px;border-radius:11px 0 11px 11px;font-size:11px;line-height:1.5;align-self:flex-end;max-width:90%;}
 .cinrow{display:flex;gap:6px;}
 .cinp{flex:1;padding:9px 12px;border:2px solid rgba(91,75,168,.2);border-radius:var(--rp);font-size:12px;font-family:'DM Sans',sans-serif;background:#fff;color:var(--td);outline:none;transition:.2s;}
 .cinp:focus{border-color:var(--cd);}
-.csend{width:36px;height:36px;border-radius:50%;background:var(--cd);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;transition:.2s;flex-shrink:0;}
+.csend{width:36px;height:36px;border-radius:50%;background:var(--cd);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--tl);font-size:13px;transition:.2s;flex-shrink:0;}
 .csend:hover{background:var(--cd2);}
 .streak-card{background:var(--cy);}
 .stlbl{font-size:10px;color:rgba(30,27,75,.5);margin-bottom:8px;font-weight:500;}
 .stbig{font-family:'Nunito',sans-serif;font-size:40px;font-weight:900;color:var(--td);line-height:1;}
 .stsub{font-size:11px;color:rgba(30,27,75,.6);margin:3px 0 10px;}
 .stdots{display:flex;gap:4px;}
-.std{width:24px;height:24px;border-radius:50%;background:rgba(30,27,75,.12);display:flex;align-items:center;justify-content:center;font-size:10px;}
-.std.d{background:var(--cd);color:#fff;}
+.std{width:24px;height:24px;border-radius:50%;background:rgba(91,75,168,.12);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--tmd);}
+.std.d{background:var(--cd);color:var(--tl);}
 
 /* ACT SCREENS */
 .ascreen{display:none;animation:fu .3s ease;}
@@ -231,10 +273,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
 .backbtn:hover{background:rgba(91,75,168,.2);}
 .bg2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 @media(max-width:700px){.bg2,.sg2,.gg2,.dg2{grid-template-columns:1fr;}}
-.bcard{background:var(--cd);color:#fff;}
+.bcard{background:var(--cd);color:var(--tl);}
 .bcirc{width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.12);margin:0 auto 16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;transition:transform 1s ease;}
 .bem{font-size:34px;}
-.bwrd{font-family:'Nunito',sans-serif;font-weight:900;font-size:13px;color:#fff;}
+.bwrd{font-family:'Nunito',sans-serif;font-weight:900;font-size:13px;color:var(--tl);}
 .bcnt{font-size:10px;color:rgba(255,255,255,.6);}
 .bdots{display:flex;gap:5px;justify-content:center;margin-bottom:12px;}
 .bdot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.2);}
@@ -246,7 +288,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
 .bbtn{flex:1;padding:11px;border-radius:var(--rp);border:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;cursor:pointer;transition:.2s;}
 .bbtn-w{background:#fff;color:var(--cd);}
 .bbtn-w:hover{background:var(--cy);}
-.bbtn-g{background:rgba(255,255,255,.15);color:#fff;}
+.bbtn-g{background:rgba(255,255,255,.15);color:var(--tl);}
 .bbtn:disabled{opacity:.4;cursor:not-allowed;}
 .tccol{display:flex;flex-direction:column;gap:10px;}
 .tcitem{background:var(--cl);border-radius:var(--rlg);padding:13px;cursor:pointer;border:2px solid transparent;transition:.2s;}
@@ -256,9 +298,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
 .tcdesc{font-size:10px;color:var(--tmd);}
 .tipbox{background:var(--clav);border-radius:var(--rlg);padding:11px 13px;font-size:11px;color:var(--cd);line-height:1.6;margin-top:9px;}
 .complcard{background:var(--cy);border-radius:var(--rxl);padding:22px;text-align:center;display:none;animation:popin .5s cubic-bezier(.34,1.56,.64,1);}
-.ccbtn{background:var(--cd);color:#fff;border:none;border-radius:var(--rp);padding:10px 20px;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;cursor:pointer;margin:0 3px;}
+.ccbtn{background:var(--cd);color:var(--tl);border:none;border-radius:var(--rp);padding:10px 20px;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;cursor:pointer;margin:0 3px;}
 .sg2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.stcard{background:var(--cd);color:#fff;}
+.stcard{background:var(--cd);color:var(--tl);}
 .stem{font-size:44px;margin-bottom:12px;display:block;}
 .stbadge2{background:rgba(255,255,255,.15);display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:var(--rp);font-size:10px;font-weight:700;margin-bottom:10px;}
 .sttitle{font-family:'Nunito',sans-serif;font-weight:900;font-size:19px;margin-bottom:7px;}
@@ -268,7 +310,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
 .sc:hover{border-color:var(--cd);background:var(--clav);color:var(--cd);}
 .schint{font-size:9px;color:var(--tmd);margin-top:2px;}
 .gg2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.gqcard{background:var(--cd);color:#fff;}
+.gqcard{background:var(--cd);color:var(--tl);}
 .gocard{background:var(--cl);}
 .got{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;color:var(--cd);margin-bottom:11px;}
 .gobtn{width:100%;background:#fff;border:2px solid rgba(91,75,168,.12);border-radius:var(--rlg);padding:11px;font-size:16px;cursor:pointer;margin-bottom:8px;transition:.2s;}
@@ -281,12 +323,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
 .dtlbl{font-size:9px;font-weight:700;color:var(--tml);text-transform:uppercase;letter-spacing:.06em;}
 .cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
 .cbbtn{width:100%;aspect-ratio:1;border-radius:50%;border:3px solid transparent;cursor:pointer;transition:.2s;}
-.cbbtn.sel{border-color:#fff;transform:scale(1.1);}
+.cbbtn.sel{border-color:var(--tl);transform:scale(1.1);}
 .szbtns{display:flex;gap:6px;}
-.szbtn{flex:1;padding:7px;border-radius:var(--rp);background:rgba(255,255,255,.15);border:none;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:10px;cursor:pointer;transition:.2s;}
+.szbtn{flex:1;padding:7px;border-radius:var(--rp);background:rgba(255,255,255,.15);border:none;color:var(--tl);font-family:'Nunito',sans-serif;font-weight:700;font-size:10px;cursor:pointer;transition:.2s;}
 .szbtn.sel{background:#fff;color:var(--cd);}
 .dbtn{padding:9px;border-radius:var(--rp);border:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;cursor:pointer;transition:.2s;}
-.dbtn-g{background:rgba(255,255,255,.15);color:#fff;}
+.dbtn-g{background:rgba(255,255,255,.15);color:var(--tl);}
 .dbtn-w{background:#fff;color:var(--cd);}
 
 /* ACTIVITY PAGE */
@@ -328,7 +370,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
 .moodcrd{background:var(--cy);}
 .moodbig{font-size:46px;margin:5px 0 3px;}
 .moodv{font-family:'Nunito',sans-serif;font-weight:900;font-size:16px;color:var(--td);margin-bottom:1px;}
-.moods{font-size:10px;color:rgba(30,27,75,.6);}
+.moods{font-size:10px;color:var(--tmd);}
 .actn-crd{background:var(--clav);grid-column:1/3;}
 @media(max-width:1000px){.actn-crd{grid-column:1/-1;}}
 .actt{font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;color:var(--cd);margin-bottom:8px;}
@@ -348,15 +390,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
 .profnm{font-family:'Nunito',sans-serif;font-weight:900;font-size:20px;color:#fff;margin-bottom:3px;}
 .proftag{background:rgba(255,255,255,.15);display:inline-block;padding:3px 12px;border-radius:var(--rp);font-size:10px;color:rgba(255,255,255,.8);font-weight:600;}
 .stat3g{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px;}
-.s3{background:#fff;border-radius:var(--rlg);padding:13px;text-align:center;box-shadow:var(--ss);}
+.s3{background:var(--cl);border-radius:var(--rlg);padding:13px;text-align:center;box-shadow:var(--ss);}
 .s3v{font-family:'Nunito',sans-serif;font-weight:900;font-size:24px;color:var(--cd);line-height:1;}
 .s3l{font-size:9px;color:var(--tmd);margin-top:2px;}
 .bdgrow{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
-.bdgcrd{background:#fff;border-radius:var(--rlg);padding:12px 13px;display:flex;align-items:center;gap:10px;flex:1;min-width:120px;box-shadow:var(--ss);}
+.bdgcrd{background:var(--cl);border-radius:var(--rlg);padding:12px 13px;display:flex;align-items:center;gap:10px;flex:1;min-width:120px;box-shadow:var(--ss);}
 .bdgic{font-size:24px;}
 .bdgnm{font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;color:var(--td);}
 .bdgds{font-size:9px;color:var(--tmd);}
-.sttcrd{background:#fff;border-radius:var(--rxl);overflow:hidden;box-shadow:var(--sh);margin-bottom:16px;}
+.sttcrd{background:var(--cl);border-radius:var(--rxl);overflow:hidden;box-shadow:var(--sh);margin-bottom:16px;}
 .srow{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid rgba(91,75,168,.07);cursor:pointer;transition:.15s;}
 .srow:last-child{border-bottom:none;}
 .srow:hover{background:var(--cl);}
@@ -364,7 +406,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
 .sric{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;}
 .srtl{font-weight:600;font-size:12px;color:var(--td);}
 .srsl{font-size:10px;color:var(--tmd);}
-.tog{width:36px;height:20px;border-radius:10px;background:#E5E7EB;position:relative;cursor:pointer;transition:.3s;border:none;flex-shrink:0;}
+.tog{width:36px;height:20px;border-radius:10px;background:var(--tmd);position:relative;cursor:pointer;transition:.3s;border:none;flex-shrink:0;}
 .tog.on{background:var(--cd);}
 .tog::after{content:'';position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:.3s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
 .tog.on::after{left:19px;}
@@ -392,7 +434,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
 
   <!-- S1: KARŞILAMA -->
   <div class="ob-screen on" id="ob-s1">
-    <div class="ob-logo">Lumio<span>.</span></div>
+    <div class="ob-logo">Lumio <span>AI</span></div>
     <div class="ob-tag">Çocukların duygularını anlamalarına<br>yardımcı olan AI arkadaşı</div>
     <button class="btn-white" onclick="obGo(2)">Başlayalım →</button>
     <button class="btn-ghost" onclick="loginMode()">Zaten hesabım var</button>
@@ -534,6 +576,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
       <button class="mt-btn on" onclick="setMode('child',this)">Çocuk</button>
       <button class="mt-btn" onclick="askPin()">Veli</button>
     </div>
+    <div class="theme-tog" id="theme-toggle">
+      <button class="tt-btn on" id="theme-light" onclick="setTheme('light')" title="Light Mode">☀️</button>
+      <button class="tt-btn" id="theme-night" onclick="setTheme('night')" title="Night Mode">🌙</button>
+      <button class="tt-btn" id="theme-dreamy" onclick="setTheme('dreamy')" title="Dreamy Mode">✨</button>
+      <button class="tt-btn" id="theme-cozy" onclick="setTheme('cozy')" title="Cozy Mode">🔥</button>
+    </div>
     <div style="display:flex;gap:7px;">
       <button class="ib">?</button>
       <button class="ib">⚙</button>
@@ -623,7 +671,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
             <div class="complcard" id="bcomp">
               <div style="font-size:42px;margin-bottom:7px;">🌟</div>
               <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:17px;color:var(--td);margin-bottom:4px;">Harika iş!</div>
-              <div style="font-size:11px;color:rgba(30,27,75,.6);margin-bottom:12px;">Kendini daha iyi hissediyor musun?</div>
+              <div style="font-size:11px;color:var(--tmd);margin-bottom:12px;">Kendini daha iyi hissediyor musun?</div>
               <button class="ccbtn" onclick="resetBreath()">Tekrar</button>
               <button class="ccbtn" onclick="closeAct()">Bitti 😊</button>
             </div>
@@ -662,7 +710,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
         <div class="dg2">
           <div class="card dcrd">
             <canvas id="dc" height="280"></canvas>
-            <div id="draw-saved" style="display:none;margin-top:9px;background:var(--cm);border-radius:var(--rmd);padding:9px;font-size:11px;color:#065F46;font-weight:600;text-align:center;">✅ Kaydedildi!</div>
+            <div id="draw-saved" style="display:none;margin-top:9px;background:var(--cm);border-radius:var(--rmd);padding:9px;font-size:11px;color:var(--td);font-weight:600;text-align:center;">✅ Kaydedildi!</div>
           </div>
           <div class="card dtool">
             <div class="dtlbl">Renk</div>
@@ -713,7 +761,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
           <div class="leg"><div class="legit"><div class="legdt" style="background:#8B7CF6;"></div>Mutlu</div><div class="legit"><div class="legdt" style="background:#60A5FA;"></div>Nötr</div><div class="legit"><div class="legdt" style="background:#F9A8D4;"></div>Üzgün</div></div>
         </div>
         <div class="card moodcrd">
-          <div style="font-size:10px;color:rgba(30,27,75,.5);margin-bottom:3px;">Bu hafta</div>
+          <div style="font-size:10px;color:var(--tmd);margin-bottom:3px;">Bu hafta</div>
           <div class="moodbig">😊</div>
           <div class="moodv">Mutlu</div>
           <div class="moods">Haftanın %58'inde</div>
@@ -732,7 +780,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
   <div class="page" id="pg-act">
     <div class="apghd"><h2>Aktiviteler</h2><p>Bugün ne yapmak istersin?</p></div>
     <div class="apgrid">
-      <div class="apcard" style="background:var(--cd);color:#fff;" onclick="goActPage('breath')"><span class="apem">🫁</span><div class="aptitle">Sihirli Nefes</div><div class="apdesc">3 teknik, sakinleş ve odaklan.</div><div class="aparr">↗</div></div>
+      <div class="apcard" style="background:var(--cd);color:var(--tl);" onclick="goActPage('breath')"><span class="apem">🫁</span><div class="aptitle">Sihirli Nefes</div><div class="apdesc">3 teknik, sakinleş ve odaklan.</div><div class="aparr">↗</div></div>
       <div class="apcard" style="background:var(--cy);color:var(--td);" onclick="goActPage('story')"><span class="apem">📖</span><div class="aptitle">Hikaye</div><div class="apdesc">Seçimlerini yap, macera şekillensin!</div><div class="aparr" style="background:rgba(30,27,75,.15);">↗</div></div>
       <div class="apcard" style="background:var(--clav);color:var(--td);" onclick="goActPage('game')"><span class="apem">🎮</span><div class="aptitle">Duygu Oyunu</div><div class="apdesc">Hangi duygu hangisi?</div><div class="aparr" style="background:rgba(91,75,168,.15);">↗</div></div>
       <div class="apcard" style="background:var(--cm);color:var(--td);" onclick="goActPage('draw')"><span class="apem">🎨</span><div class="aptitle">Çizim</div><div class="apdesc">Hissettiklerini renklerle ifade et.</div><div class="aparr" style="background:rgba(30,27,75,.12);">↗</div></div>
@@ -778,7 +826,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
 
   <!-- PIN MODAL -->
   <div id="pin-modal" style="display:none;position:fixed;inset:0;background:rgba(30,27,75,.55);backdrop-filter:blur(8px);z-index:999;display:none;align-items:center;justify-content:center;padding:24px;">
-    <div style="background:#fff;border-radius:32px;padding:32px 28px;width:100%;max-width:360px;text-align:center;box-shadow:0 24px 60px rgba(91,75,168,.25);animation:popin .3s cubic-bezier(.34,1.56,.64,1);">
+    <div style="background:var(--cl);border-radius:32px;padding:32px 28px;width:100%;max-width:360px;text-align:center;box-shadow:0 24px 60px rgba(91,75,168,.25);animation:popin .3s cubic-bezier(.34,1.56,.64,1);">
       <div style="width:60px;height:60px;border-radius:20px;background:var(--clav);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 16px;">🔐</div>
       <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:20px;color:var(--td);margin-bottom:6px;">Veli Girişi</div>
       <div style="font-size:13px;color:var(--tmd);margin-bottom:24px;line-height:1.5;">Veli paneline erişmek için<br>PIN kodunu gir</div>
@@ -1040,51 +1088,168 @@ function pickEmo(btn,e){
 }
 
 function generateLumioResponse(userMsg){
-  // Lumio tarzı yanıt oluştur
-  const emotionEmojis = {happy:'😊',sad:'💜',angry:'😤',scared:'🌈',neutral:'😐',unknown:'🤔'};
   const emotion = lastEmotion;
   const ageGroup = selAgeRange.value;
+  const msgLower = userMsg.toLowerCase().trim();
   
-  // Duygulara göre empati cümlesi
-  const empathyMap = {
-    happy: "Mutluluğunun paylaştığın için teşekkürler!",
-    sad: "Bu seni üzmüş olabilir. Böyle hissetmen çok normal.",
-    angry: "Kızgın hissetmek zor olabilir. Anlıyorum seni.",
-    scared: "Korkmuş olmak çok doğal bir his.",
-    neutral: "Sakin bir gün yaşıyor gibi görünüyorsun.",
-    unknown: "Seni anlamaya çalışıyorum."
+  // Anahtar kelime analizi
+  const keywordMap = {
+    school: ['okul','sınav','öğretmen','ders','dersin','matematik','türkçe','ingilizce','sınıf','sınavdan','sınavı','sınavlar','arkadaş','ödevim','proje'],
+    family: ['annem','babam','anne','baba','kardaş','abla','abi','ailesi','aile','kız kardeş','erkek kardeş','ailemin','ailede'],
+    peer: ['arkadaş','arkadaşım','arkadaşımla','grupta','grup','dışlanmış','yalnız','konuşmadı','oynamadı','hala'],
+    success: ['başarılı','başardım','iyileştirdim','yaptım','başarı','kazandım','yenildi','tamamladım','yüksek not'],
+    loss: ['kayıp','kaybettim','yok','gitti','gitmişi','gitmiş','başarısız','başaramadım','olmadı','yapamadım','başarısız'],
+    self: ['kendim','utandığım','çok sinirli','çok üzgün','çok korkmuş','endişeli','kaygılı','endişe','kaygı'],
+    physical: ['ağrı','hasta','yorgun','hava','hızlı kalp','nefes','uyku'],
   };
   
-  // Yaş grubuna göre dil düzeyleri
-  const supportMap = {
-    '5-7': {
-      response: [
-        `${empathyMap[emotion]} ${emotionEmojis[emotion]} Seninle birlikte olmaktan mutluyum!`,
-        `${empathyMap[emotion]} 🌟 Bana bir daha anlatır mısın?`
+  let detectedContext = 'general';
+  for(const [context, keywords] of Object.entries(keywordMap)){
+    if(keywords.some(kw => msgLower.includes(kw))){
+      detectedContext = context;
+      break;
+    }
+  }
+  
+  // Duygusal yanıt haritaları
+  const emotionResponse = {
+    happy: {
+      '5-7': [
+        "Çok mutlu olman harika! 😊 Seni böyle görünce ben de mutlu oldum!",
+        "Senin mutluluğun çok güzel! 🌟 Bana daha da anlatır mısın?",
+        "Vay canına! Çok başarılı bir gün yaşamışsın demek! ✨",
       ],
-      suggestion: " Isterseniz bir renk seçip hissini çizebilirsin!"
+      '8-11': [
+        "Harika hissediyorsun! 💫 Bu güzel hissi uzun süre tutmak ister misin?",
+        "Mutluluğunun sebebi nedir tam olarak? Bana daha detaylı anlatabilir misin?",
+        "Çok başarılısın! Bu başarı nereden geldi, biliyor musun?",
+        "Gün çok iyi geçmiş! Bu hissi paylaştığın için teşekkürler. 😊",
+      ],
+      '12-14': [
+        "Çok mutlusun görünüyor! 💜 Bu duygu nereden kaynaklanıyor tam olarak?",
+        "Harika! Bu başarının ardında hangi çabalar var? Detaylı anlatır mısın?",
+        "Mutluluğunun nedeni nedir? Başka kimin bu başarısında payı var?",
+        "Yüksek motivasyon seviyor! Bunu devam ettirmek için neler yapabilirsin?",
+      ]
     },
-    '8-11': {
-      response: [
-        `${empathyMap[emotion]} Bunun hakkında daha fazla konuşmak ister misin?`,
-        `${empathyMap[emotion]} Her gün farklı hissedebiliriz, bu çok doğal.`,
-        `${empathyMap[emotion]} Seninle her zaman konuşabilirsin.`
+    sad: {
+      '5-7': [
+        "Üzüntün çok doğal! Sana sarılmak istiyorum. 💜 Neler oldu bana anlat?",
+        "Üzgünsün, tamam. Böyle hissetmek zorundayız bazen. Benimle konuşmak ister misin?",
+        "Üzüldüğünü görüyorum. Ne oldu? Yardımcı olabilir miyim?",
       ],
-      suggestion: " Isterseniz birlikte bir nefes egzersizi yapabiliriz veya bunun hakkında daha konuşabiliriz."
+      '8-11': [
+        "Üzülmüş olabilirsin, ama bunu paylaştığın için çok cesursun. 💜",
+        "Üzüntü tüm insanların yaşadığı bir duygu. Neler oldu? Detaylarını öğrenebilir miyim?",
+        "Zor bir durum yaşıyor gibi görünüyorsun. Bu hissi içinde tutmak yerine paylaşmak daha iyi.",
+        "Kalbim sana yanıyor. Bunun arkasında neler var? Konuşmak istemez misin?",
+      ],
+      '12-14': [
+        "Görüyorum ki güç bir dönem yaşıyorsun. 💜 Bunun derininde neler yatıyor?",
+        "Üzüntü bazen yaşam gerçeğinin bir parçası. Ama sen gösterebilirsin ki bunun üstesinden geleceksin.",
+        "Bu üzüntü geçici. Peki, bu hissi besleyen temel faktörler nelerdir?",
+        "Zor zamanlarda bile burada olmaktan mutluyum. Bana tüm detaylarını anlat?",
+        "Ağlamak da ok, konuşmak da. Sence bu duygular nereden geldi?",
+      ]
     },
-    '12-14': {
-      response: [
-        `${empathyMap[emotion]} 💜 Bunu yazarak daha iyi anlatabilirsin misin?`,
-        `${empathyMap[emotion]} O an neler hissettin? Merak ediyorum.`,
-        `${empathyMap[emotion]} Seninle bu konuda tartışmak isterim.`
+    angry: {
+      '5-7': [
+        "Kızgın mısın? O normal! 😤 Ama sakin kalman gerekiyor. Neler oldu?",
+        "Çok sinirli! Nefes al ve bana ne olduğunu söyle.",
+        "Kızgınlık geçer. Seninle bu konuda konuşabiliriz. Neler seni kızdırdı?",
       ],
-      suggestion: " Günlüğüne yazarak duygularını daha derinden keşfedebilirsin."
+      '8-11': [
+        "Sinirlendin, tamam. Fakat bu duyguyu kontrol edebilirsin. Neler başına geldi?",
+        "Kızgınlık biriktirdiğinde çaba harcıyor. Bana açık konuş, nedir bu kızgınlığın nedeni?",
+        "Sinir duygularını anlamak önemli. Neden kızgınsın? Detaylarını dinlemek istiyorum.",
+      ],
+      '12-14': [
+        "Sinir yönetimi zor! Ama bu duyguyu anlamak ilk adım. Ne seni bu kadar kızdırdı?",
+        "Kızgınlık often valid ama destructive olabilir. Bunun arka planındaki trigger nedir?",
+        "Öfke duygularını kontrol etmek olgunluğun göstergesi. Bana objektif olarak anlatır mısın?",
+        "Kızgın hissetmen normaldir, ama davranışlarını seçebilirsin. Neler oldu?",
+      ]
+    },
+    scared: {
+      '5-7': [
+        "Korktuğunu anlamıyorum! 🌈 Ama ben seninle buradayım. Neden korkuyor?",
+        "Korkmak normaldir. Benimle bu korkunu konuşabilir misin?",
+        "Korkun geçecek. Bana ne seni korkutmuş, söyler misin?",
+      ],
+      '8-11': [
+        "Korku hepimizin yaşadığı bir duygudur. 🌈 Ama korkunun ne olduğunu bilmek yardımcı olur.",
+        "Korktuğunu görüyorum. Hangi spesifik şeyden korkuyor? Bana anlatabilir misin?",
+        "Korkun gerçek mi yoksa tasarlanmış mı? Detaylarını dinlemek istiyorum.",
+      ],
+      '12-14': [
+        "Korku bazen bizi uyarıyor, bazen de hayali. Korkun nedir, analiz etmeyi öğrenebilirsin.",
+        "Korktuğunu yüzleşmek cesaret gerektirir. Neden korkuyor? Detayı paylaşabilir misin?",
+        "Korkunun kaynağını bulmak onu zayıflatan ilk adımdır. Ne seni korkutmuş?",
+        "Rasyonel korkular vs irrasyonel. Korkun hangisi? Detaylarını dinlemek istiyorum.",
+      ]
+    },
+    neutral: {
+      '5-7': [
+        "Hiç özel bir hissin yok gibi? Sakin bir gün geçiriyor musun? 😐",
+        "Nötr hissediyorsun. Günün nasıl geçti? Bana anlatır mısın?",
+        "Normal bir gün yaşıyor gibi görünüyorsun. Oynat bana detaylarını! 😊",
+      ],
+      '8-11': [
+        "Duygu düzeyin sakin. Bugün ne oldu? Detaylarını merak ediyorum.",
+        "Normal hissediyorsun. Bu da ok! Günün nasıl geçti? Belki konuşmak istersin?",
+        "Sakin ve dengeli görünüyorsun. Bugünün en iyi kısmı neydi?",
+      ],
+      '12-14': [
+        "Nötr durumdaysın. Bu kişisel özelliktir mi yoksa bugün böyle midir?",
+        "Sakinsin. Ama bu hissin altında yatanlar var mı? Merak ediyorum.",
+        "Dengeli görünüyorsun. Bu denge korkulmuş mu yoksa sadece bugünmü?",
+      ]
     }
   };
   
-  const groupResponses = supportMap[ageGroup] || supportMap['8-11'];
-  const randomResponse = groupResponses.response[Math.floor(Math.random() * groupResponses.response.length)];
-  const finalResponse = randomResponse + groupResponses.suggestion;
+  // Bağlama göre önerileri
+  const contextSuggestions = {
+    '5-7': {
+      school: "✏️ Eğer sınavdan endişe ediyorsan, oyunlar oynayarak rahatlamayı dene!",
+      family: "👨‍👩‍👧 Aile sorunları bazen konuşmakla çözülür. Ailenle daha yakın konuş!",
+      peer: "👫 Arkadaşlıklar bazen değişir, ama yeni arkadaşlar yapabilirsin!",
+      success: "🌟 Başarın çok güzel! Bunu kimle kutlayacaksın?",
+      loss: "❤️ Kayıplar zorludur. Ama bu hissi çizim yaparak ifade edebilirsin!",
+      self: "💫 Kendin hakkında iyisini söyle. Sen çok iyisin!",
+      general: "🌙 Bugünün en güzel kısmı neydi? Bana anlatır mısın?"
+    },
+    '8-11': {
+      school: "📚 Okul stresi alışılmış bişey ama yönetilebilir. Nefes egzersizi yapabilirsin!",
+      family: "👨‍👩‍👧 Aile dinamikleri karmaşık. Ama iletişim çözüm getiriyor.",
+      peer: "👥 Sosyal çatışmalar çok yaşanır. Emosiyon kontrol tekniklerini öğrenebilirsin!",
+      success: "🏆 Başarım senden uzakta değil! Senin harika becerilerine inanıyorum.",
+      loss: "💔 Kayıpla baş etmek zordur. Nefes egzersizi veya çizim yapabilirsin.",
+      self: "🌟 Kendin hakkında düşün. Hangi güzel özelliklerine bir baksan?",
+      general: "📖 Diyarında bu duygularını yazıp saklamayı dene!"
+    },
+    '12-14': {
+      school: "🎓 Akademik baskı çok yaşanır, ama perspektif önemli. Uzun dönem hedeflerini koy!",
+      family: "👨‍👩‍👧 Ebeveyn ilişkisi gelişim açısından karmaşık olabilir. Empati kurma çalış!",
+      peer: "👥 Sosyal dinamikler çok değişken. Ama yeterli ve değerli olduğunu bil!",
+      success: "🚀 Başarının sebebini analiz edersen, tekrarlanabilir olur.",
+      loss: "🖤 Kayıp ve başarısızlık yaşama derinlik katıyor. Journal yaz!",
+      self: "💪 Kendine karşı kıl olma. Gelişim bir yolculuk. Dışarıdan iyiymiş gibi görün!",
+      general: "✍️ Duygularını diyarında derinlemesine keşfet!"
+    }
+  };
+  
+  // Yanıt seç
+  let emotionKey = emotion;
+  if(!emotionResponse[emotion]) emotionKey = 'neutral';
+  
+  const ageResponses = emotionResponse[emotionKey][ageGroup] || emotionResponse[emotionKey]['8-11'];
+  const mainResponse = ageResponses[Math.floor(Math.random() * ageResponses.length)];
+  
+  // Bağlamsal öne
+  const contextAvailable = contextSuggestions[ageGroup] || contextSuggestions['8-11'];
+  const suggestion = contextAvailable[detectedContext] || contextAvailable['general'];
+  
+  const finalResponse = mainResponse + " " + suggestion;
   
   return finalResponse;
 }
@@ -1144,6 +1309,47 @@ function saveDrawing(){document.getElementById('draw-saved').style.display='bloc
 const days=[{h:70,n:20,s:10},{h:50,n:30,s:20},{h:60,n:25,s:15},{h:40,n:20,s:40},{h:80,n:15,s:5},{h:0,n:0,s:0},{h:0,n:0,s:0}];
 const ba=document.getElementById('bar-area');
 days.forEach(d=>{const col=document.createElement('div');col.className='bcol';if(d.h+d.n+d.s===0){col.innerHTML=`<div class="bsg" style="height:4px;background:#E5E7EB;"></div>`;}else{col.innerHTML=`<div class="bsg" style="height:${d.s}%;background:#F9A8D4;"></div><div class="bsg" style="height:${d.n}%;background:#60A5FA;"></div><div class="bsg" style="height:${d.h}%;background:#8B7CF6;"></div>`;}ba.appendChild(col);});
+
+// ════════════════════════════════════
+// THEME SYSTEM
+// ════════════════════════════════════
+const themes = ['light', 'night', 'dreamy', 'cozy'];
+const themeIcons = { light: '☀️', night: '🌙', dreamy: '✨', cozy: '🔥' };
+
+function setTheme(theme) {
+  if (!themes.includes(theme)) theme = 'light';
+  
+  // Set data-theme attribute
+  document.documentElement.setAttribute('data-theme', theme === 'light' ? '' : theme);
+  
+  // Save to localStorage
+  localStorage.setItem('lumio-theme', theme);
+  
+  // Update button states
+  document.querySelectorAll('.tt-btn').forEach(btn => btn.classList.remove('on'));
+  document.getElementById('theme-' + theme).classList.add('on');
+}
+
+function initTheme() {
+  // Load saved theme or default to 'light'
+  const savedTheme = localStorage.getItem('lumio-theme') || 'light';
+  setTheme(savedTheme);
+  
+  // Initialize theme buttons
+  document.querySelectorAll('.tt-btn').forEach((btn, idx) => {
+    if (btn.id === 'theme-' + savedTheme) {
+      btn.classList.add('on');
+    }
+  });
+}
+
+// Initialize theme on page load
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initTheme);
+} else {
+  initTheme();
+}
+
 </script>
 </body>
 </html>
