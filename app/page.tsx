@@ -1,5 +1,8 @@
-import { redirect } from "next/navigation";
-
 export default function Home() {
-  redirect("/lumio-ai.html");
+  return (
+    <main style={{ padding: 20 }}>
+      <h1>Lumio AI</h1>
+      <p>Proje çalışıyor 🚀</p>
+    </main>
+  );
 }
