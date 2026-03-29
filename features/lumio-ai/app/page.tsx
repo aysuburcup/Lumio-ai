@@ -1,60 +1,43 @@
+"use client";
+import { useState } from "react";
+
 export default function Home() {
+  const [input, setInput] = useState("");
+  const [response, setResponse] = useState("");
+
+  const sendMessage = async () => {
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: input }),
+      });
+
+      const data = await res.json();
+      setResponse(data.reply || "Cevap alınamadı.");
+    } catch (error) {
+      setResponse("Bir hata oluştu.");
+    }
+  };
+
   return (
-    <div style={{
-      minHeight: "100vh",
-      background: "#F4F2FF",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      fontFamily: "Arial"
-    }}>
+    <div style={{ padding: "40px" }}>
+      <h2>Lumio AI 🌙</h2>
 
-      <div style={{
-        width: "350px",
-        background: "white",
-        borderRadius: "20px",
-        padding: "20px",
-        boxShadow: "0 10px 30px rgba(91,75,168,0.1)"
-      }}>
+      <input
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="Nasıl hissediyorsun?"
+        style={{ padding: "10px", width: "100%", marginBottom: "10px" }}
+      />
 
-        {/* Üst başlık */}
-        <h2 style={{
-          textAlign: "center",
-          color: "#5B4BA8",
-          marginBottom: "20px"
-        }}>
-          Lumio AI 🌙
-        </h2>
+      <button onClick={sendMessage}>
+        Gönder
+      </button>
 
-        {/* Soru */}
-        <p style={{
-          textAlign: "center",
-          marginBottom: "20px"
-        }}>
-          Bugün nasıl hissediyorsun?
-        </p>
-
-        {/* Emoji grid */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: "15px"
-        }}>
-          {["😊","😢","😡","😨","😐","🤷"].map((emoji, i) => (
-            <button key={i} style={{
-              fontSize: "24px",
-              padding: "15px",
-              borderRadius: "12px",
-              border: "none",
-              background: "#F4F2FF",
-              cursor: "pointer"
-            }}>
-              {emoji}
-            </button>
-          ))}
-        </div>
-
-      </div>
+      <p>{response}</p>
     </div>
   );
 }

@@ -847,26 +847,27 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);-webk
 
 </div><!-- /app-inner -->
 </div><!-- /app-view -->
-
 <script>
-// ══ ONBOARDING ══
-let obCurrent=1, selAvatar='😊', selInts=0;
+let obCurrent = 1;
+let selInts = 0;
+let selAvatar = '😊';
+
+function obGo(n){
+  obCurrent = n;
+  document.querySelectorAll('.ob-screen').forEach(s=>s.classList.remove('on','exit'));
+  const curr = document.getElementById('ob-s'+n);
+  if(curr){
+    curr.classList.add('on');
+  }
+  updateObUI();
+}
+
 function loginMode(){
-  // Sadece telefon + kod ekranlarını göster, bittikten sonra direkt app
   document.getElementById('ob-s2').dataset.login = 'true';
+  document.getElementById('ob-pbar').style.display = 'flex';
   obGo(2);
 }
 
-function obGo(n){
-  const cur=document.getElementById('ob-s'+obCurrent);
-  cur.classList.add('exit');
-  setTimeout(()=>cur.classList.remove('on','exit'),400);
-  obCurrent=n;
-  setTimeout(()=>{
-    document.getElementById('ob-s'+n).classList.add('on');
-    updateObUI();
-  },50);
-}
 function obBack(){if(obCurrent>2)obGo(obCurrent-1);}
 function updateObUI(){
   const pb=document.getElementById('ob-pbar');
@@ -1260,11 +1261,48 @@ function sendMsg(){
   if(!v)return;
   addBub(v,'user');
   inp.value='';
-  setTimeout(()=>{
-    const lumioResponse = generateLumioResponse(v);
-    addBub(lumioResponse,'ai');
+  
+  // Loading indicator
+  const loadingMsg = document.createElement('div');
+  loadingMsg.className='cbai';
+  loadingMsg.innerHTML='Lumio düşünüyor... 💭';
+  loadingMsg.id='loading-msg';
+  document.getElementById('chat-area').appendChild(loadingMsg);
+  document.getElementById('chat-area').scrollTop=document.getElementById('chat-area').scrollHeight;
+  
+  callBackendAPI(v).then(response => {
+    document.getElementById('loading-msg')?.remove();
+    addBub(response, 'ai');
     mi++;
-  },650);
+  }).catch(error => {
+    document.getElementById('loading-msg')?.remove();
+    addBub('Üzgünüm, bir hata oluştu. Tekrar dene lütfen 💜', 'ai');
+    console.error('API Error:', error);
+  });
+}
+
+async function callBackendAPI(userMessage) {
+  const response = await fetch('/api/gemini', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      message: userMessage,
+      ageRange: selAgeRange.value || '8-11'
+    })
+  });
+  
+  if (!response.ok) {
+    throw new Error(`API Error: ${response.status}`);
+  }
+  
+  const data = await response.json();
+  if (data.reply) {
+    return data.reply;
+  } else {
+    throw new Error('Invalid API response');
+  }
 }
 function addBub(t,tp){const a=document.getElementById('chat-area');const d=document.createElement('div');d.className=tp==='ai'?'cbai':'cbusr';d.textContent=t;a.appendChild(d);a.scrollTop=a.scrollHeight;}
 
