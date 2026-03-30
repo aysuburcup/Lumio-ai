@@ -22,6 +22,8 @@ Lumio AI, çocuklarla emoji, yazı ve sohbet aracılığıyla etkileşime girere
 
 **Yayın Linki:** [https://lumio-ai-aysuburcups-projects.vercel.app](https://lumio-ai-aysuburcups-projects.vercel.app)
 
+**Demo Video:** [Lumio AI Demo — Loom](https://loom.com/share/lumio-ai-demo) *(video hazırlandığında link güncellenecektir)*
+
 ## Kullanılan Teknolojiler
 
 - **Frontend:** HTML5, CSS3, Vanilla JavaScript
@@ -71,7 +73,10 @@ Lumio-ai/
 ├── prd.md              # Ürün gereksinimleri
 ├── tasks.md            # Geliştirme görev listesi
 ├── tech-stack.md       # Teknik mimari
-└── user-flow.md        # Kullanıcı akışları
+├── user-flow.md        # Kullanıcı akışları
+├── features/           # Kaynak kodları
+├── agents/             # AI agent kodları ve dokümantasyonu
+└── assets/             # Görseller ve ekran görüntüleri
 ```
 
 ## Gelecek Özellikler (V2)
