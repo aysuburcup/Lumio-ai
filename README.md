@@ -1,36 +1,147 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lumio AI
 
-## Getting Started
+> Çocukların duygularını tanımasına, ifade etmesine yardımcı olan ve riskli durumları erken tespit eden yapay zeka destekli web uygulaması.
 
-First, run the development server:
+## Problem
 
+Türkiye’de ve dünyada milyonlarca çocuk duygularını tanımakta ve ifade etmekte zorlanıyor. Okullarda rehberlik kapasitesi sınırlı, psikolojik destek hizmetlerine erişim yetersiz ve erken müdahale mekanizmaları neredeyse hiç yok. Bu durum; zorbalık, içe kapanma, kaygı bozukluğu ve depresyon gibi ciddi sonuçlara yol açıyor.
+
+## Çözüm
+
+Lumio AI, çocuklarla emoji, yazı ve sohbet aracılığıyla etkileşime girerek duygusal durumlarını analiz eden bir erken uyarı sistemidir. Uygulama:
+
+- **Duygu takibi** yaparak çocuğun günlük ruh halini kayıt altına alır
+- **AI sohbet** ile empatik ve yaşa uygun yanıtlar üretir (5-7, 8-11, 12-14 yaş gruplarına özel)
+- **Risk analizi** ile olumsuz duygu örüntülerini tespit eder (3 kademeli: sarı, turuncu, kırmızı)
+- **Veli paneli** üzerinden ebeveynlere haftalık duygu özeti ve risk bildirimi sunar
+- **Aktiviteler** (nefes egzersizi, etkileşimli hikaye, duygu oyunu, çizim) ile çocuğa anlık destek sağlar
+
+> Sorunu çözmüyoruz — sorunu başlamadan yakalıyoruz.
+
+## Canlı Demo
+
+**Yayın Linki:** [https://lumio-ai-aysuburcups-projects.vercel.app](https://lumio-ai-aysuburcups-projects.vercel.app)
+
+## Kullanılan Teknolojiler
+
+- **Frontend:** HTML5, CSS3, Vanilla JavaScript
+- **UI/UX:** Nunito & DM Sans fontları, Responsive tasarım, CSS Custom Properties
+- **Tema Sistemi:** Light, Night, Dreamy, Cozy modları
+- **AI Entegrasyon:** Kural tabanlı duygu analizi ve risk skorlama motoru
+- **Deploy:** Vercel (statik hosting)
+- **Versiyon Kontrolü:** Git & GitHub
+
+## Özellikler
+
+- 🧒 **Çocuk Arayüzü** — Büyük butonlar, emoji ağırlıklı, canlı renkler
+- 💬 **AI Sohbet** — Yaş grubuna ve duygu durumuna göre empatik yanıtlar
+- 🫁 **Nefes Egzersizi** — 4-7-8, Kare Nefes ve Basit teknikler
+- 📖 **Etkileşimli Hikaye** — Seçime dayalı duygu hikayesi
+- 🎮 **Duygu Oyunu** — Duruma uygun duyguyu eşleştirme
+- 🎨 **Çizim Tuvali** — Serbest çizim ile duygu ifadesi
+- 👨‍👩‍👧 **Veli Paneli** — PIN korumalı, haftalık duygu grafikleri ve risk göstergesi
+- 🔐 **Gizlilik** — Veli sohbet içeriğini göremez, yalnızca örüntü özeti görür
+- 🛡 **KVKK Uyumlu** — Ebeveyn onay akışı zorunlu
+
+## Nasıl Çalıştırılır?
+
+### Yerel Geliştirme
+1. Repoyu klonlayın:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/aysuburcup/Lumio-ai.git
+cd Lumio-ai
+```
+2. `index.html` dosyasını tarayıcıda açın — herhangi bir kurulum gerektirmez.
+
+### Canlı Versiyon
+Doğrudan [https://lumio-ai-aysuburcups-projects.vercel.app](https://lumio-ai-aysuburcups-projects.vercel.app) adresinden kullanabilirsiniz.
+
+## Demo Bilgileri
+
+- **Ebeveyn onay kodu:** Herhangi 4 rakam (örn: 1234)
+- **Veli paneli PIN:** 1234
+
+## Proje Yapısı
+
+```
+Lumio-ai/
+├── index.html          # Ana uygulama (tek dosya)
+├── vercel.json         # Vercel deploy yapılandırması
+├── idea.md             # Proje fikir dokümanı
+├── prd.md              # Ürün gereksinimleri
+├── tasks.md            # Geliştirme görev listesi
+├── tech-stack.md       # Teknik mimari
+└── user-flow.md        # Kullanıcı akışları
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Gelecek Özellikler (V2)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- 🎙 Ses analizi (Whisper API)
+- ✏️ Çizim analizi (TensorFlow.js)
+- 🏫 Öğretmen paneli ve sınıf bazlı raporlama
+- 🏅 Gamification: rozet sistemi, avatar gelişimi
+- 🇹🇷 Türkçe NLP modelinin fine-tuning ile güçlendirilmesi
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+*Lumio AI — Kadınları Güçlendiren Program, Chapter 3 Projesi*# Lumio AI
 
-To learn more about Next.js, take a look at the following resources:
+> Çocukların duygularını tanımasına, ifade etmesine yardımcı olan ve riskli durumları erken tespit eden yapay zeka destekli web uygulaması.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Problem
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Türkiye'de ve dünyada milyonlarca çocuk duygularını tanımakta ve ifade etmekte zorlanıyor. Okullarda rehberlik kapasitesi sınırlı, psikolojik destek hizmetlerine erişim yetersiz ve erken müdahale mekanizmaları neredeyse hiç yok. Bu durum; zorbalık, içe kapanma, kaygı bozukluğu ve depresyon gibi ciddi sonuçlara yol açıyor.
 
-## Deploy on Vercel
+## Çözüm
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Lumio AI, çocuklarla emoji, yazı ve sohbet aracılığıyla etkileşime girerek duygusal durumlarını analiz eden bir erken uyarı sistemidir. Uygulama:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Duygu takibi** yaparak çocuğun günlük ruh halini kayıt altına alır
+- **AI sohbet** ile empatik ve yaşa uygun yanıtlar üretir (5-7, 8-11, 12-14 yaş gruplarına özel)
+- **Risk analizi** ile olumsuz duygu örüntülerini tespit eder (3 kademeli: sarı, turuncu, kırmızı)
+- **Veli paneli** üzerinden ebeveynlere haftalık duygu özeti ve risk bildirimi sunar
+- **Aktiviteler** (nefes egzersizi, etkileşimli hikaye, duygu oyunu, çizim) ile çocuğa anlık destek sağlar
+
+> AI sadece bugünkü duyguya değil, geçen haftaya göre ne kadar değiştiğine bakar. Sorunu çözmüyoruz — sorunu başlamadan yakalıyoruz.
+
+## Canlı Demo
+
+**Yayın Linki:** [https://lumio-ai-aysuburcups-projects.vercel.app](https://lumio-ai-aysuburcups-projects.vercel.app)
+
+## Kullanılan Teknolojiler
+
+- **Frontend:** HTML5, CSS3, Vanilla JavaScript
+- **UI/UX:** Nunito & DM Sans fontları, Responsive tasarım, CSS Custom Properties
+- **Tema Sistemi:** Light, Night, Dreamy, Cozy modları
+- **AI Entegrasyon:** Kural tabanlı duygu analizi ve risk skorlama motoru
+- **Deploy:** Vercel (statik hosting)
+- **Versiyon Kontrolü:** Git & GitHub
+
+## Özellikler
+
+- 🧒 **Çocuk Arayüzü** — Büyük butonlar, emoji ağırlıklı, canlı renkler
+- 💬 **AI Sohbet** — Yaş grubuna ve duygu durumuna göre empatik yanıtlar
+- 🫁 **Nefes Egzersizi** — 4-7-8, Kare Nefes ve Basit teknikler
+- 📖 **Etkileşimli Hikaye** — Seçime dayalı duygu hikayesi
+- 🎮 **Duygu Oyunu** — Duruma uygun duyguyu eşleştirme
+- 🎨 **Çizim Tuvali** — Serbest çizim ile duygu ifadesi
+- 👨‍👩‍👧 **Veli Paneli** — PIN korumalı, haftalık duygu grafikleri ve risk göstergesi
+- 🔐 **Gizlilik** — Veli sohbet içeriğini göremez, yalnızca örüntü özeti görür
+- 🛡 **KVKK Uyumlu** — Ebeveyn onay akışı zorunlu
+
+## Nasıl Çalıştırılır?
+
+### Yerel Geliştirme
+1. Repoyu klonlayın:
+   \`\`\`bash
+   git clone https://github.com/aysuburcup/Lumio-ai.git
+   cd Lumio-ai
+   \`\`\`
+2. \`index.html\` dosyasını tarayıcıda açın — herhangi bir kurulum gerektirmez.
+
+### Canlı Versiyon
+Doğrudan [https://lumio-ai-aysuburcups-projects.vercel.app](https://lumio-ai-aysuburcups-projects.vercel.app) adresinden kullanabilirsiniz.
+
+## Demo Bilgileri
+
+- **Ebeveyn onay kodu:** Herhangi 4 rakam (örn: 1234)
