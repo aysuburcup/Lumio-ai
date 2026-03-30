@@ -92,4 +92,4 @@ Lumio-ai/
 
 ---
 
-*Lumio AI — Kadınları Güçlendiren Program, Chapter 3 Projesi*
+*Lumio AI 
