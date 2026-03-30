@@ -22,5 +22,5 @@ Bu klasör, Lumio AI projesinin görsel ve medya dosyalarını içerir.
 
 ## Not
 
-Görseller ve ekran görüntüleri projenin gelişim sürecinde eklenecektir.
+Görseller ve ekran görüntüleri files.zip klasöründe.
 Demo video linki README.md dosyasında bulunmaktadır.
