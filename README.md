@@ -4,7 +4,7 @@
 
 ## Problem
 
-Türkiye'de ve dünyada milyonlarca çocuk duygularını tanımakta ve ifade etmekte zorlanıyor. Okullarda rehberlik kapasitesi sınırlı, psikolojik destek hizmetlerine erişim yetersiz ve erken müdahale mekanizmaları neredeyse hiç yok. Bu durum; zorbalık, içe kapanma, kaygı bozukluğu ve depresyon gibi ciddi sonuçlara yol açıyor.
+Türkiye’de ve dünyada milyonlarca çocuk duygularını tanımakta ve ifade etmekte zorlanıyor. Okullarda rehberlik kapasitesi sınırlı, psikolojik destek hizmetlerine erişim yetersiz ve erken müdahale mekanizmaları neredeyse hiç yok. Bu durum; zorbalık, içe kapanma, kaygı bozukluğu ve depresyon gibi ciddi sonuçlara yol açıyor.
 
 ## Çözüm
 
