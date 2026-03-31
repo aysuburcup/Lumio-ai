@@ -4,7 +4,7 @@
 
 ## Problem
 
-Türkiye’de ve dünyada milyonlarca çocuk duygularını tanımakta ve ifade etmekte zorlanıyor. Okullarda rehberlik kapasitesi sınırlı, psikolojik destek hizmetlerine erişim yetersiz ve erken müdahale mekanizmaları neredeyse hiç yok. Bu durum; zorbalık, içe kapanma, kaygı bozukluğu ve depresyon gibi ciddi sonuçlara yol açıyor.
+Türkiye'de ve dünyada milyonlarca çocuk duygularını tanımakta ve ifade etmekte zorlanıyor. Okullarda rehberlik kapasitesi sınırlı, psikolojik destek hizmetlerine erişim yetersiz ve erken müdahale mekanizmaları neredeyse hiç yok. Bu durum; zorbalık, içe kapanma, kaygı bozukluğu ve depresyon gibi ciddi sonuçlara yol açıyor.
 
 ## Çözüm
 
@@ -22,7 +22,7 @@ Lumio AI, çocuklarla emoji, yazı ve sohbet aracılığıyla etkileşime girere
 
 **Yayın Linki:** [https://lumio-ai-aysuburcups-projects.vercel.app](https://lumio-ai-aysuburcups-projects.vercel.app)
 
-**Demo Video:** [Lumio AI Demo — Loom](https://loom.com/share/lumio-ai-demo)
+**Demo Video:** [Lumio AI Demo — Loom](https://www.loom.com/share/395aad38a42b4fe2bf74b4a3ed738528)
 
 **Portfolyo Sayfası:** [https://lumio-ai-aysuburcups-projects.vercel.app/portfolio.html](https://lumio-ai-aysuburcups-projects.vercel.app/portfolio.html)
 
@@ -92,4 +92,4 @@ Lumio-ai/
 
 ---
 
-*Lumio AI 
+*Lumio AI — Kadınları Güçlendiren Program, Chapter 3 Projesi*
